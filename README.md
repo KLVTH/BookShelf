@@ -6,9 +6,24 @@
 
 ## Status
 
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+<p align="center">
+<img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
+</p>
+
+## Instalação
+
+Digite o seguinte comando no terminal para instalar as depêndencias:
+```Markdown
+npm install 
+```
+Após a instalação compile o programa com o seguinte comando:
+```Markdown
+npx expo start 
+```
+
 
 ## Sobre
+
 ### Descrição do Projeto
 Desenvolvimento de um aplicativo para a leitura de arquivos de texto em diversos formatos, especializado na leitura de livros. O aplicativo visa oferecer uma plataforma organizada e eficiente para que os usuários possam armazenar, acessar e ler seus documentos digitais, proporcionando uma experiência personalizada e integrada com funcionalidades como categorização, transcrição de livro em áudio e imagem utilizando ferramentas de Inteligência Artificial e suporte a múltiplos formatos de arquivos de texto.
 ### Componentes do grupo
