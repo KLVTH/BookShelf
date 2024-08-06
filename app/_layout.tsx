@@ -1,24 +1,46 @@
-import "../global.css";
+/* eslint-disable prettier/prettier */
 
-import "react-native-gesture-handler";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Stack } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { Drawer } from "expo-router/drawer"
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(drawer)",
+import CustomerDrawerContent from "~/components/CustomDrawerContent";
+
+
+const DrawerLayout = () => {
+    return (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Drawer
+                drawerContent={CustomerDrawerContent}
+                screenOptions={{
+                    drawerHideStatusBarOnOpen: true,
+                    drawerActiveBackgroundColor: '#5363df',
+                    drawerActiveTintColor: '#fff',
+                    drawerLabelStyle: { marginLeft: -20 }
+                }}>
+            <Drawer.Screen
+                name='index'
+                options={{
+                    drawerLabel: 'Minha Estante',
+                    headerTitle: 'Minha Estante',
+                    drawerIcon: ({ size, color}) => (
+                    <Ionicons name="home-outline" size={size} color={color}/>
+                )
+                }}
+            />
+            <Drawer.Screen
+                name='profile'
+                options={{
+                    drawerLabel: 'Meu Perfil',
+                    headerTitle: 'Meu Perfil',
+                    drawerIcon: ({ size, color}) => (
+                    <Ionicons name="person-outline" size={size} color={color}/>
+                )
+                }}
+            />
+        </Drawer>
+    </GestureHandlerRootView>
+    )
 };
 
-export default function RootLayout() {
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack>
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ title: "Modal", presentation: "modal" }}
-        />
-      </Stack>
-    </GestureHandlerRootView>
-  );
-}
+export default DrawerLayout;
