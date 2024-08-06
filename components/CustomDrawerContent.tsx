@@ -14,33 +14,22 @@ export default function CustomerDrawerContent(props: any) {
                 scrollEnabled={false}
                 contentContainerStyle={{ backgroundColor: '#dde3fe', paddingTop: top}}>
                 
-                <View style={{ padding: 30 }}>
+                <View className="p-8">
                     <Image
                         source={require('../assets/ProfilePicTest.png')}
-                        style={{ width: 100, height: 100, alignSelf: 'center', borderRadius: 50 }}
+                        className="w-28 h-28 self-center rounded-full"
                     />
-                    <Text style={{
-                        alignSelf: 'center',
-                        fontWeight: '500',
-                        fontSize: 18,
-                        paddingTop: 10,
-                        color: '#5363df'
-                    }}>
+                    <Text className="self-center font-medium text-[18px] pt-2.5 text-orange-500">
                         Kauã O. Seixas
                     </Text>
                 </View>
 
-                <View style={{ backgroundColor: '#fff', paddingTop: 10}}>
+                <View className="bg-white pt-2.5">
                     <DrawerItemList {...props} />
                     <DrawerItem label={"Logout"} onPress={() => router.replace('/')} />
                 </View>
             </DrawerContentScrollView>
-            <View style={{
-                borderTopColor: '#dde3fe',
-                borderTopWidth: 1,
-                padding: 20,
-                paddingBottom: 20 + bottom
-            }}>
+            <View className="border-t-black border-t p-5 pb-${bottom+5}">
                 <Text>Bottom</Text>
             </View>
         </View>

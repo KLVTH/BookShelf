@@ -43,3 +43,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 - [Expo](https://expo.io/)
 - [React Native](https://reactnative.dev/)
+- [NativeWind v4](https://www.nativewind.dev/v4/overview)
