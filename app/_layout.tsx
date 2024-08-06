@@ -13,7 +13,6 @@ const DrawerLayout = () => {
             <Drawer
                 drawerContent={CustomerDrawerContent}
                 screenOptions={{
-                    drawerHideStatusBarOnOpen: true,
                     drawerActiveBackgroundColor: '#5363df',
                     drawerActiveTintColor: '#fff',
                     drawerLabelStyle: { marginLeft: -20 }
