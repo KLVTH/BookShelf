@@ -10,9 +10,9 @@ export const HeaderButton = forwardRef<
     <Pressable onPress={onPress}>
       {({ pressed }) => (
         <FontAwesome
-          name="info-circle"
-          size={25}
-          color="gray"
+          name="search"
+          size={35}
+          color="black"
           style={[
             styles.headerRight,
             {
@@ -27,6 +27,7 @@ export const HeaderButton = forwardRef<
 
 export const styles = StyleSheet.create({
   headerRight: {
-    marginRight: 15,
+     
+    marginRight: 20,
   },
 });
