@@ -1,12 +1,13 @@
-/* eslint-disable prettier/prettier */
 import { View, Text } from 'react-native';
+import SearchBox from '../components/SearchBox'; 
 
-const Page = () => {
+const Home = () => {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>teste</Text>
+        <View className="flex-1 items-center justify-center">
+            <Text className="bg-orange-500 font-bold">teste</Text>
+            <SearchBox />
         </View>
     );
 };
 
-export default Page;
+export default Home;
