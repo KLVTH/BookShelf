@@ -1,29 +1,26 @@
-import React, { useRef, useState } from "react"
-import { FlatList, SectionList, Text, View } from "react-native"
+import React, { useRef, useState } from 'react';
+import { FlatList, SectionList, Text, View } from 'react-native';
 
-import { styles } from "./styles"
-import { CATEGORIES, BOOKS } from "../utils/data"
-
-import { Book } from "../components/book"
-import { Category } from "../components/category"
+import { styles } from './styles';
+import { Book } from 'src/components/book';
+import { Category } from 'src/components/category';
+import { CATEGORIES, BOOKS } from '../utils/data';
 
 const Home = () => {
-  const [category, setCategory] = useState(CATEGORIES[0])
-  const sectionListRef = useRef<SectionList>(null)
+  const [category, setCategory] = useState(CATEGORIES[0]);
+  const sectionListRef = useRef<SectionList>(null);
 
   function handleCategorySelect(selectedCategory: string) {
-    setCategory(selectedCategory)
+    setCategory(selectedCategory);
 
-    const sectionIndex = CATEGORIES.findIndex(
-      (category) => category === selectedCategory
-    )
+    const sectionIndex = CATEGORIES.findIndex((category) => category === selectedCategory);
 
     if (sectionListRef.current) {
       sectionListRef.current.scrollToLocation({
         animated: true,
         sectionIndex,
         itemIndex: 0,
-      })
+      });
     }
   }
 
@@ -50,7 +47,8 @@ const Home = () => {
         />
       </View>
 
-      <SectionList style={{width: '100%'}}
+      <SectionList
+        style={{ width: '100%' }}
         ref={sectionListRef}
         sections={BOOKS}
         keyExtractor={(item) => item}
@@ -59,13 +57,10 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.sectionContainer}
         //Talvez seja possível ao implementar a busca por voz a procura pela sessão
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
-        )}
+        renderSectionHeader={({ section: { title } }) => <Text style={styles.header}>{title}</Text>}
       />
     </View>
-  )
-}
+  );
+};
 
-export default Home
-
+export default Home;
