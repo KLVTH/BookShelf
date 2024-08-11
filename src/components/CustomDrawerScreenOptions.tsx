@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Ionicons } from "@expo/vector-icons";
-import { HeaderButton } from '~/components/HeaderButton';
+import { HeaderButton } from 'src/components/HeaderButton';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { ParamListBase } from '@react-navigation/native';
 
