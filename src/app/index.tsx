@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { FlatList, SectionList, Text, View } from 'react-native';
+import { FileButton } from 'src/components/FileButton';
 
-import { styles } from './styles';
 import { Book } from 'src/components/book';
 import { Category } from 'src/components/category';
-import { CATEGORIES, BOOKS } from '../utils/data';
+import { BOOKS, CATEGORIES } from '../utils/data';
+import { styles } from './styles';
 
 const Home = () => {
   const [category, setCategory] = useState(CATEGORIES[0]);
@@ -26,7 +27,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <View className="border-b-2 border-custom-light-gray ">
+      <View className="border-orange-500 border-b-2">
         <FlatList
           data={CATEGORIES}
           keyExtractor={(item) => item}
@@ -42,7 +43,7 @@ const Home = () => {
             gap: 12,
             paddingHorizontal: 32,
           }}
-          showsHorizontalScrollIndicator={false}
+          showsHorizontalScrollIndicator={true}
           horizontal
         />
       </View>
@@ -54,11 +55,12 @@ const Home = () => {
         keyExtractor={(item) => item}
         stickySectionHeadersEnabled={false}
         renderItem={() => <Book />}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
         contentContainerStyle={styles.sectionContainer}
         //Talvez seja possível ao implementar a busca por voz a procura pela sessão
         renderSectionHeader={({ section: { title } }) => <Text style={styles.header}>{title}</Text>}
       />
+      <FileButton></FileButton>
     </View>
   );
 };
