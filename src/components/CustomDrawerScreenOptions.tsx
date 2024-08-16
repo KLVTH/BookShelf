@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Ionicons } from "@expo/vector-icons";
-import { HeaderButton } from 'src/components/HeaderButton';
+import { SearchButton } from 'src/components/SearchButton';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { ParamListBase } from '@react-navigation/native';
 
@@ -30,7 +30,7 @@ const DrawerScreenOptions = ({ navigation }: DrawerScreenOptionsProps) => ({
         />
     ),
     headerRight: () => (
-        <HeaderButton
+        <SearchButton
             onPress={() => {
                 console.log('Header button pressed!');
             }}

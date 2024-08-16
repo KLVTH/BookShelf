@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Pressable, StyleSheet } from "react-native";
 
-export const HeaderButton = forwardRef<
+export const SearchButton = forwardRef<
   typeof Pressable,
   { onPress?: () => void }
 >(({ onPress }, ref) => {
