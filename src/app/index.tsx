@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, SectionList, Text, View } from 'react-native';
+import { FlatList, SectionList, Text, View, Image } from 'react-native';
 import { FileButton } from 'src/components/FileButton';
 
-import { Book } from 'src/components/book';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Category } from 'src/components/category';
 import { BOOKS, CATEGORIES } from '../utils/data';
 import { styles } from './styles';
@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <View className="border-orange-500 border-b-2">
+      <View className="border-b-2 border-orange-500">
         <FlatList
           data={CATEGORIES}
           keyExtractor={(item) => item}
@@ -54,10 +54,27 @@ const Home = () => {
         sections={BOOKS}
         keyExtractor={(item) => item}
         stickySectionHeadersEnabled={false}
-        renderItem={() => <Book />}
+        renderItem={({ item }) => (
+          <View>
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'gray',
+                height: 52,
+                width: '100%',
+                marginBottom: 16,
+                borderRadius: 12,
+                display: 'flex',
+                flexDirection: 'row', // Alinha a imagem e o texto em uma linha
+                alignItems: 'center', // Alinha verticalmente no centro
+              }}>
+              <Image source={require('src/assets/pdffile.png')} className="h-12 w-12 ml-3" />
+              <Text className="ml-3 mr-3 text-xl font-semibold">{item}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         showsVerticalScrollIndicator={true}
         contentContainerStyle={styles.sectionContainer}
-        //Talvez seja possível ao implementar a busca por voz a procura pela sessão
+        //Talvez seja possível ao implementar a busca por voz a procurar pela sessão
         renderSectionHeader={({ section: { title } }) => <Text style={styles.header}>{title}</Text>}
       />
       <FileButton></FileButton>
