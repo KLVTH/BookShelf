@@ -1,0 +1,27 @@
+import React from 'react';
+import { View, Button } from 'react-native';
+import { Audio } from 'expo-av';
+
+export default function App() {
+  const [sound, setSound] = React.useState<Audio.Sound | null>(null);
+
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(require('./assets/audio/nome_do_audio.mp3'));
+    setSound(sound);
+    await sound.playAsync(); 
+  }
+
+  React.useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync(); 
+        }
+      : undefined;
+  }, [sound]);
+
+  return (
+    <View>
+      <Button title="Reproduzir Áudio Descritivo" onPress={playSound} />
+    </View>
+  );
+}
