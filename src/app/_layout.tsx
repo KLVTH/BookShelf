@@ -5,8 +5,8 @@ import React from 'react';
 import '../../global.css';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import CustomerDrawerContent from '~/src/components/CustomDrawerContent';
-import CustomDrawerScreenOptions from '~/src/components/CustomDrawerScreenOptions';
+import DrawerContent from '~/src/components/DrawerContent';
+import DrawerScreenOptions from '~/src/components/DrawerScreenOptions';
 
 const DrawerLayout = () => {
   //Não é a forma ideal de implantar uma fonte, necessário revisão
@@ -18,8 +18,8 @@ const DrawerLayout = () => {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer drawerContent={CustomerDrawerContent} screenOptions={CustomDrawerScreenOptions}>
+    <GestureHandlerRootView className='flex-1'>
+      <Drawer drawerContent={DrawerContent} screenOptions={DrawerScreenOptions}>
         <Drawer.Screen
           name="index"
           options={{

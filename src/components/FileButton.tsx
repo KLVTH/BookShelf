@@ -1,9 +1,9 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
-import { Button } from '../components/Button';
 import * as DocumentPicker from 'expo-document-picker';
 import { DocumentPickerResult } from 'expo-document-picker';
+import { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
+//https://sujeitoprogramador.com/wp-content/uploads/2023/04/rni-guia-aula1.pdf
 export const FileButton = () => {
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
@@ -20,19 +20,9 @@ export const FileButton = () => {
   return (
     <View style={{ flex: 1 }}>
       <TouchableOpacity
-        style={{
-          position: 'absolute',
-          right: 20,
-          bottom: 50,
-          backgroundColor: '#000',
-          width: 50,
-          height: 50,
-          borderRadius: 25,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        className="h-14 w-14 absolute bottom-12 right-5 flex items-center justify-center rounded-full bg-black"
         onPress={pickDocument}>
-        <Text style={{ color: '#fff', fontSize: 35 }}>+</Text>
+        <Text className='color-white text-4xl'>+</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,11 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { FlatList, SectionList, Text, View, Image } from 'react-native';
+import { FlatList, Image, SectionList, Text, View } from 'react-native';
 import { FileButton } from 'src/components/FileButton';
-
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Category } from 'src/components/category';
+import { Book } from 'src/components/Book';
+import { Category } from '~/src/components/category';
 import { BOOKS, CATEGORIES } from '../utils/data';
-import { styles } from './styles';
 
 const Home = () => {
   const [category, setCategory] = useState(CATEGORIES[0]);
@@ -26,7 +24,7 @@ const Home = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-white pt-2">
       <View className="border-b-2 border-orange-500">
         <FlatList
           data={CATEGORIES}
@@ -38,7 +36,7 @@ const Home = () => {
               isSelected={item === category}
             />
           )}
-          style={styles.categories}
+          className="h-14"
           contentContainerStyle={{
             gap: 12,
             paddingHorizontal: 32,
@@ -56,26 +54,21 @@ const Home = () => {
         stickySectionHeadersEnabled={false}
         renderItem={({ item }) => (
           <View>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'gray',
-                height: 52,
-                width: '100%',
-                marginBottom: 16,
-                borderRadius: 12,
-                display: 'flex',
-                flexDirection: 'row', // Alinha a imagem e o texto em uma linha
-                alignItems: 'center', // Alinha verticalmente no centro
-              }}>
-              <Image source={require('src/assets/pdffile.png')} className="h-12 w-12 ml-3" />
-              <Text className="ml-3 mr-3 text-xl font-semibold">{item}</Text>
-            </TouchableOpacity>
+            <Book
+              title={item}
+              imageSource={require('src/assets/pdffile.png')}
+              onPress={() => {
+                console.log('Button Pressed!');
+              }}
+            />
           </View>
         )}
         showsVerticalScrollIndicator={true}
-        contentContainerStyle={styles.sectionContainer}
+        contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 32 }}
         //Talvez seja possível ao implementar a busca por voz a procurar pela sessão
-        renderSectionHeader={({ section: { title } }) => <Text style={styles.header}>{title}</Text>}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text className="mb-4 mt-8 text-[22px] font-extrabold text-[#09090A]">{title}</Text>
+        )}
       />
       <FileButton></FileButton>
     </View>

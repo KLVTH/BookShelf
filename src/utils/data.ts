@@ -1,7 +1,7 @@
 const BOOKS = [
   {
     title: 'Favoritos',
-    data: ['Pizza', 'Burger', 'Risotto'],
+    data: ['Livro 1', 'Livro 2', 'Livro 3'],
   },
   {
     title: 'Recentes',
