@@ -1,5 +1,7 @@
-import {  Pressable, PressableProps, StyleSheet } from "react-native";
+import { Pressable, PressableProps, StyleSheet } from "react-native";
 import { Text } from "@/src/components/Themed";
+import Colors from "@/src/constants/Colors"; // Importe suas cores
+import { useTheme } from "./../components/ThemeContext"; // Importe o hook de tema
 
 type CategoryProps = PressableProps & {
   title: string;
@@ -11,14 +13,25 @@ export function Category({
   isSelected = false,
   ...rest
 }: CategoryProps) {
+  const { theme } = useTheme(); // Obtenha o tema atual
+  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+
   return (
     <Pressable
-      style={[styles.container, isSelected && styles.selectedContainer]}
+      style={[
+        styles.container,
+        isSelected && styles.selectedContainer,
+        { backgroundColor: isSelected ? currentColors.primary : "transparent" }, // Aplica a cor do tema se selecionado
+      ]}
       {...rest}
     >
       <Text
-        style={[styles.text, isSelected && styles.selectedText]}
-        
+        style={[
+          styles.text,
+          isSelected
+            ? { color: currentColors.selectedText }
+            : { color: currentColors.text }, // Aplica a cor do texto de acordo com o estado
+        ]}
       >
         {title}
       </Text>
@@ -28,20 +41,16 @@ export function Category({
 
 const styles = StyleSheet.create({
   container: {
-    height: 40, // h-10
-    justifyContent: "center", // justify-center
-    borderRadius: 9999, // rounded-full (border-radius máximo)
-    paddingHorizontal: 16, // px-4
-    backgroundColor: "transparent", // Para corresponder à ausência de fundo no caso não selecionado
+    height: 40,
+    justifyContent: "center",
+    borderRadius: 9999,
+    paddingHorizontal: 16,
   },
   selectedContainer: {
-    backgroundColor: "black", // bg-black
+    // Remover essa propriedade, pois a cor é gerenciada pelo tema
   },
   text: {
-    fontSize: 18, // text-lg
-    fontWeight: "bold", // font-bold
-  },
-  selectedText: {
-    color: "#F24E1E", // text-[#F24E1E]
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

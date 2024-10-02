@@ -24,14 +24,15 @@ Após execute o programa com o seguinte comando:
 ```Markdown
 npx expo run:android 
 ```
-
+#### Ou
+Baixe o .apk da primeira versão funcional e instale o aplicativo diretamente no seu celular [Acessando aqui]([URL](https://drive.google.com/file/d/1ondRLNEXX6RsE6Xg2s7Jntrpah7UgIVc/view))
 
 ## Sobre
 
 ### Descrição do Projeto
-Desenvolvimento de um aplicativo para a leitura de arquivos de texto em diversos formatos, especializado na leitura de livros. O aplicativo visa oferecer uma plataforma organizada e eficiente para que os usuários possam armazenar, acessar e ler seus documentos digitais, proporcionando uma experiência personalizada e integrada com funcionalidades como categorização, transcrição de livro em áudio e imagem utilizando ferramentas de Inteligência Artificial e suporte a múltiplos formatos de arquivos de texto.
+Plataforma mobile de gerenciamento de documentos em formato PDF para leitura, categorização e visualização desenvolvida para operar em aparelhos Android.
 ### Componentes do grupo
-**Líder de grupo**: Kauã Oliveira Seixas
+**Líder de Projeto**: Kauã Oliveira Seixas
 
 Marcus Levi de Jesus Almeida
 
@@ -39,7 +40,6 @@ Marcus Vinícius da Silva Santos
 
 Thiago Viana Santos
 
-Herlon Silva dos Santos
 
 ## 🛠 Tecnologias
 

@@ -1,34 +1,115 @@
-import { Text, View } from "@/src/components/Themed";
-import React, { useRef, useState, useEffect } from "react";
+import Colors from "@/src/constants/Colors"; // Importe suas cores
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Button,
   FlatList,
+  Modal,
   SectionList,
   StyleSheet,
+  Text,
   TextInput,
-  Modal,
-  TouchableOpacity,
+  View,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Book } from "../components/Book";
-import { Category } from "../components/Category";
-import { FileButton } from "../components/FileButton";
-import { BOOKS, CATEGORIES } from "../utils/data";
-import { router } from "expo-router";
+import { Book } from "../../components/Book";
+import { Category } from "../../components/Category";
+import EditSectionModal from "../../components/EditSectionModal";
+import { FileButton } from "../../components/FileButton";
+import { useTheme } from "../../components/ThemeContext"; // Importe o hook de tema
+import { BOOKS, CATEGORIES } from "../../utils/data";
 
 const STORAGE_KEY_CATEGORIES = "@categories";
 const STORAGE_KEY_SECTIONS = "@sections";
 
 const Home = () => {
+  const { theme } = useTheme(); // Obtenha o tema atual
+  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [categories, setCategories] = useState(CATEGORIES);
   const [sections, setSections] = useState(BOOKS);
   const [modalVisible, setModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [sectionToEdit, setSectionToEdit] = useState<string | null>(null);
   const [newSectionName, setNewSectionName] = useState("");
   const sectionListRef = useRef<SectionList>(null);
 
-  
+  const handleEditSection = (newTitle: string) => {
+    if (sectionToEdit) {
+      if (newTitle.trim() === "") {
+        Alert.alert("Erro", "O nome da seção não pode ser vazio.");
+        return;
+      }
+
+      // Verificar se já existe uma seção com o mesmo nome (exceto a que está sendo editada)
+      const sectionExists = sections.some(
+        (section) =>
+          section.title.toLowerCase() === newTitle.trim().toLowerCase() &&
+          section.title !== sectionToEdit, // Ignorar a seção que está sendo editada
+      );
+
+      if (sectionExists) {
+        Alert.alert("Erro", "Já existe uma seção com esse nome.");
+        return;
+      }
+
+      // Atualizar o nome da seção
+      const updatedSections = sections.map((section) => {
+        if (section.title === sectionToEdit) {
+          return { ...section, title: newTitle.trim() };
+        }
+        return section;
+      });
+
+      // Atualizar as categorias
+      const updatedCategories = updatedSections.map((section) => section.title);
+      setCategories(updatedCategories); // Atualizar as categorias
+      setSections(updatedSections);
+
+      saveData(updatedCategories, updatedSections); // Salvar as seções atualizadas no AsyncStorage
+      setSectionToEdit(null);
+      setEditModalVisible(false); // Fechar o modal após a remoção
+    }
+  };
+
+  const openEditModal = (title: string) => {
+    setSectionToEdit(title);
+    setEditModalVisible(true);
+  };
+
+  const removeItemFromSection = (sectionTitle: string, itemId: string) => {
+    Alert.alert(
+      "Remover Item",
+      "Tem certeza de que deseja remover este item?",
+      [
+        {
+          text: "Não",
+          style: "cancel",
+        },
+        {
+          text: "Sim",
+          onPress: () => {
+            const updatedSections = sections.map((section) => {
+              if (section.title === sectionTitle) {
+                return {
+                  ...section,
+                  data: section.data.filter((item) => item.id !== itemId), // Filtra o item a ser removido
+                };
+              }
+              return section;
+            });
+
+            setSections(updatedSections);
+            saveData([], updatedSections); // Atualiza os dados no AsyncStorage
+          },
+        },
+      ],
+      { cancelable: false }, // Impede que o alerta seja fechado ao clicar fora
+    );
+  };
+
   const addItemToSection = (
     sectionTitle: string,
     newItem: { id: string; name: string; uri: string },
@@ -47,7 +128,7 @@ const Home = () => {
     saveData([], updatedSections);
   };
   //função que abre o pdf
-  const openPDF = (item: {name: string, uri: string }) => {
+  const openPDF = (item: { name: string; uri: string }) => {
     router.push({
       pathname: "/pdfviewer",
       params: { name: item.name, uri: item.uri },
@@ -65,8 +146,16 @@ const Home = () => {
       if (savedCategories) {
         setCategories(JSON.parse(savedCategories));
       }
+
       if (savedSections) {
-        setSections(JSON.parse(savedSections));
+        const sectionsData = JSON.parse(savedSections);
+        setSections(sectionsData);
+        /*console.log(
+          "Dados das seções carregados:",
+          JSON.stringify(sectionsData, null, 2),
+        );*/ // Usando JSON.stringify para melhor visualização
+      } else {
+        setSections([]); // Iniciar como vazio se não houver dados
       }
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
@@ -123,6 +212,17 @@ const Home = () => {
       return;
     }
 
+    // Verificar se já existe uma seção com o mesmo nome
+    const sectionExists = sections.some(
+      (section) =>
+        section.title.toLowerCase() === newSectionName.trim().toLowerCase(),
+    );
+
+    if (sectionExists) {
+      Alert.alert("Erro", "Já existe uma seção com esse nome.");
+      return;
+    }
+
     const newCategory = newSectionName.trim();
     const newSection = {
       title: newCategory,
@@ -145,35 +245,40 @@ const Home = () => {
   };
 
   // Função para remover uma seção
-  const handleRemoveSection = (sectionTitle: string) => {
-    // Exibir alerta de confirmação
-    Alert.alert(
-      "Remover Seção",
-      `Tem certeza de que deseja remover a seção "${sectionTitle}"?`,
-      [
-        {
-          text: "Não",
-          style: "cancel",
-        },
-        {
-          text: "Sim",
-          onPress: () => {
-            const updatedCategories = categories.filter(
-              (category) => category !== sectionTitle,
-            );
-            const updatedSections = sections.filter(
-              (section) => section.title !== sectionTitle,
-            );
-
-            setCategories(updatedCategories);
-            setSections(updatedSections);
-
-            // Salvar os dados atualizados no AsyncStorage
-            saveData(updatedCategories, updatedSections);
+  const handleRemoveSection = () => {
+    if (sectionToEdit) {
+      Alert.alert(
+        "Confirmar Remoção",
+        "Tem certeza de que deseja remover esta seção?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
           },
-        },
-      ],
-    );
+          {
+            text: "Remover",
+            onPress: () => {
+              // Código de remoção da seção
+              const updatedCategories = categories.filter(
+                (category) => category !== sectionToEdit,
+              );
+              const updatedSections = sections.filter(
+                (section) => section.title !== sectionToEdit,
+              );
+
+              setCategories(updatedCategories);
+              setSections(updatedSections);
+
+              // Salvar os dados atualizados no AsyncStorage
+              saveData(updatedCategories, updatedSections);
+              setSectionToEdit(null);
+              setEditModalVisible(false); // Fechar o modal após a remoção
+            },
+          },
+        ],
+        { cancelable: false }, // Impede que o alerta seja fechado ao clicar fora
+      );
+    }
   };
 
   return (
@@ -205,28 +310,49 @@ const Home = () => {
         sections={sections}
         keyExtractor={(item) => item.id}
         stickySectionHeadersEnabled={false}
-        renderItem={({ item }) => (
+        renderItem={({ item, section }) => (
           <View>
             <Book
               title={item.name}
-              imageSource={require("./../assets/images/icon.png")}
+              //imageSource={require("../../assets/images/file.png")}
               onPress={() => openPDF(item)}
-              onLongPress={() => {
-                console.log("Button long Pressed!");
-              }}
+              onLongPress={() => removeItemFromSection(section.title, item.id)}
             />
           </View>
         )}
         showsVerticalScrollIndicator={true}
         contentContainerStyle={styles.sectionListContent}
         renderSectionHeader={({ section: { title } }) => (
-          <TouchableOpacity onLongPress={() => handleRemoveSection(title)}>
-            <Text style={styles.sectionHeader}>{title}</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={[styles.sectionHeader, { color: currentColors.text }]}>
+              {title}
+            </Text>
+
+            <Button
+              title="Editar"
+              onPress={() => openEditModal(title)} // Abre o modal de edição com o título da seção
+            />
+          </View>
         )}
         ListFooterComponent={
-          <Button title="Adicionar Seção" onPress={handleButtonPress} />
+          <Button title="Adicionar Seção" onPress={handleButtonPress}  />
         }
+        ListEmptyComponent={<Text style={{color: currentColors.text, flex: 1, padding: 10, textAlign: "center"}}>Adicione uma seção:</Text>}
+      />
+
+      {/* Modal para edição da seção */}
+      <EditSectionModal
+        visible={editModalVisible}
+        onClose={() => setEditModalVisible(false)}
+        currentTitle={sectionToEdit || ""}
+        onSave={handleEditSection}
+        onDelete={handleRemoveSection} // Passando a função de remover
       />
 
       {/* Modal para entrada do nome da nova seção */}
@@ -267,6 +393,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%"
   },
   categoryListContainer: {
     paddingTop: 10,
@@ -282,10 +409,11 @@ const styles = StyleSheet.create({
   },
   sectionList: {
     width: "100%",
+
   },
   sectionListContent: {
     paddingBottom: 100,
-    paddingHorizontal: 32,
+    paddingHorizontal: 12,
   },
   sectionHeader: {
     marginBottom: 16,

@@ -3,14 +3,14 @@ import { StyleSheet, Dimensions, View, Text } from "react-native";
 import Pdf from "react-native-pdf";
 
 const pdfpage = () => {
-  const { name, uri } = useLocalSearchParams<{name: string, uri: string}>();
+  const { name, uri } = useLocalSearchParams<{ name: string; uri: string }>();
   return (
     <View style={styles.container}>
-      <Text>{name}</Text>
-      <Text>{uri}</Text>
+      {/*<Text>{name}</Text>
+      <Text>{uri}</Text>*/}
       <Pdf
         source={{
-          uri
+          uri,
         }}
         style={styles.pdf}
       />

@@ -2,17 +2,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { ParamListBase } from "@react-navigation/native";
 import React from "react";
-import { useColorScheme } from "react-native"; // Importando useColorScheme
+import { useTheme } from "../components/ThemeContext"; // Importa o ThemeContext
 import { SearchButton } from "./SearchButton";
 
 type DrawerScreenOptionsProps = {
   navigation: DrawerNavigationProp<ParamListBase>;
 };
 
+// Função que retorna as opções do Drawer
 const DrawerScreenOptions = ({ navigation }: DrawerScreenOptionsProps) => {
-  const colorScheme = useColorScheme(); // Obtendo o tema atual
+  const { theme } = useTheme(); // Usa o contexto de tema
 
-  const menuIconColor = colorScheme === "dark" ? "white" : "black"; // Define a cor como branco se a cor do sistema for preto
+  const menuIconColor = theme === "dark" ? "#e6e6e6" : "black"; // Define a cor do ícone com base no tema
 
   return {
     drawerActiveBackgroundColor: "#F24E1E",
@@ -23,23 +24,19 @@ const DrawerScreenOptions = ({ navigation }: DrawerScreenOptionsProps) => {
       fontSize: 30,
       marginLeft: -5,
     },
+
     headerLeft: () => (
       <Ionicons
         name="menu"
         size={40}
-        color={menuIconColor} // Aplicando a cor do ícone baseada no tema
+        color={menuIconColor} // Cor do ícone baseada no tema
         style={{ marginLeft: 15, marginVertical: 12 }}
         onPress={() => navigation.toggleDrawer()} // Abre/fecha o Drawer
       />
     ),
-    headerRight: () => (
-      <SearchButton
-        onPress={() => {
-          console.log("Header button pressed!");
-        }}
-      />
-    ),
+    
   };
 };
 
+// Exporta a função como padrão
 export default DrawerScreenOptions;

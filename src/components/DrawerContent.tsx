@@ -30,12 +30,12 @@ export default function CustomDrawerContent(props: any) {
           darkColor="rgba(255,255,255,0.1)"
         >
           <Image
-            source={require("./../assets/images/ProfilePicTest.png")}
+            source={require("./../assets/images/adaptive-icon.png")}
             style={{
-              height: 112, // 28 * 4 (para conversão de unidades Tailwind para pixels, se 1 unidade = 4 pixels)
+              height: 112,
               width: 112,
               alignSelf: "center",
-              borderRadius: 56, // 28 * 2 para borda arredondada completa
+              borderRadius: 56,
             }}
           />
           <Text
@@ -47,7 +47,7 @@ export default function CustomDrawerContent(props: any) {
               color: "#f97316",
             }}
           >
-            Kauã O. Seixas
+            BookShelf
           </Text>
         </View>
 
@@ -57,15 +57,10 @@ export default function CustomDrawerContent(props: any) {
           darkColor="rgba(255,255,255,0.1)"
         >
           <DrawerItemList {...props} />
-          <DrawerItem
-            label={"Logout"}
-            onPress={() => router.replace("/")}
-            icon={({ size, color }) => (
-              <Ionicons name="log-out" size={size} color={color} />
-            )}
-          />
+          
         </View>
       </DrawerContentScrollView>
+      {/*O rodapé do Drawer
       <View
         style={{
           paddingBottom: bottom + 20,
@@ -79,7 +74,7 @@ export default function CustomDrawerContent(props: any) {
         <Text lightColor="#eee" darkColor="white">
           Rodapé
         </Text>
-      </View>
+      </View>*/}
     </View>
   );
 }

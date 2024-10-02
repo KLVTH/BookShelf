@@ -1,16 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+  ThemeProvider as NavigationThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Drawer } from "expo-router/drawer";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
-import { useColorScheme } from "@/src/components/useColorScheme";
+import { ThemeProvider, useTheme } from "./../components/ThemeContext"; // Importa o contexto de tema
 import DrawerContent from "../components/DrawerContent";
 import DrawerScreenOptions from "../components/DrawerScreenOptions";
 
@@ -21,7 +21,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "index",
+  initialRouteName: "home",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -48,23 +48,34 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  // Envolve o layout no ThemeProvider para que o tema seja acessível em todo o aplicativo
+  return (
+    <ThemeProvider>
+      <RootLayoutNav />
+    </ThemeProvider>
+  );
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-  // Retorna o Drawer com a configuração do tema.
+  const { theme } = useTheme(); // Usa o hook de tema que criamos
+  const isDarkTheme = theme === "dark";
+
+  // Usa o tema com base na escolha do usuário
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Drawer drawerContent={DrawerContent} screenOptions={DrawerScreenOptions}>
+    <NavigationThemeProvider
+      value={isDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme}
+    >
+      <Drawer drawerContent={DrawerContent} screenOptions={DrawerScreenOptions} initialRouteName="home">
         <Drawer.Screen
-          name="index"
+          name="(home)"
           options={{
+            headerShown: false,
             drawerLabel: "Minha Estante",
             headerTitle: "Minha Estante",
             drawerIcon: ({ size, color }) => (
               <Ionicons name="library" size={size} color={color} />
             ),
+            
           }}
         />
         <Drawer.Screen
@@ -77,7 +88,8 @@ function RootLayoutNav() {
             ),
           }}
         />
+        
       </Drawer>
-    </ThemeProvider>
+    </NavigationThemeProvider>
   );
 }

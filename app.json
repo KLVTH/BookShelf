@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "BookShelf281",
+    "name": "BookShelf",
     "slug": "BookShelf281",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "src/assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#262222"
     },
     "ios": {
       "supportsTablet": true
@@ -18,9 +18,15 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#262222"
       },
-      "package": "com.KLVTH.BookShelf281"
+      "package": "com.KLVTH.BookShelf281",
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +40,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "920d7b81-bf85-4b02-8ad3-12a4f32f5abb"
+      }
     }
   }
 }
