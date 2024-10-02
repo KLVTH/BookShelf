@@ -1,40 +1,49 @@
 {
   "expo": {
     "name": "BookShelf",
-    "slug": "BookShelf",
+    "slug": "BookShelf281",
     "version": "1.0.0",
-    "scheme": "BookShelf",
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "src/assets/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      "expo-font"
-    ],
-    "experiments": {
-      "typedRoutes": true,
-      "tsconfigPaths": true
-    },
     "orientation": "portrait",
-    "icon": "src/assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "src/assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "src/assets/splash.png",
+      "image": "src/assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#262222"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "src/assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "src/assets/images/adaptive-icon.png",
+        "backgroundColor": "#262222"
+      },
+      "package": "com.KLVTH.BookShelf281",
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "src/assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "@config-plugins/react-native-blob-util",
+      "@config-plugins/react-native-pdf"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "920d7b81-bf85-4b02-8ad3-12a4f32f5abb"
       }
     }
   }
