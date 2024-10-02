@@ -25,7 +25,7 @@ Após execute o programa com o seguinte comando:
 npx expo run:android 
 ```
 #### Ou
-Baixe o .apk da primeira versão funcional e instale o aplicativo diretamente no seu celular [Acessando aqui]([URL](https://drive.google.com/file/d/1ondRLNEXX6RsE6Xg2s7Jntrpah7UgIVc/view))
+Baixe o .apk da primeira versão funcional e instale o aplicativo diretamente no seu celular [Acessando aqui](https://drive.google.com/file/d/1ondRLNEXX6RsE6Xg2s7Jntrpah7UgIVc/view)
 
 ## Sobre
 
