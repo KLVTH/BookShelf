@@ -1,23 +1,27 @@
-import { Text, View } from "@/src/components/Themed";
 import { Ionicons } from "@expo/vector-icons";
 import {
   DrawerContentScrollView,
-  DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { useRouter } from "expo-router";
-import { Image } from "react-native";
+import { Image, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTheme } from "./ThemeContext";
+import Colors from "../constants/Colors";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
   const { top, bottom } = useSafeAreaInsets(); // Obtém os valores das margens seguras no topo e na parte inferior da tela.
 
+  const { theme } = useTheme(); // Obtenha o tema atual
+  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+
   return (
     <View
-      style={{ flex: 1 }}
-      lightColor="#eee"
-      darkColor="rgba(255,255,255,0.1)"
+      style={{ flex: 1, backgroundColor: currentColors.drawerContent }}
+      //lightColor="#eee"
+      //darkColor="rgba(255,255,255,0.1)"
+      
     >
       <DrawerContentScrollView
         {...props}
@@ -25,9 +29,9 @@ export default function CustomDrawerContent(props: any) {
         contentContainerStyle={{ backgroundColor: "#red", paddingTop: top }}
       >
         <View
-          style={{ padding: 16 }}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
+          style={{ padding: 16, backgroundColor: currentColors.drawerContent }}
+          //lightColor="#eee"
+          //darkColor="rgba(255,255,255,0.1)"
         >
           <Image
             source={require("./../assets/images/adaptive-icon.png")}
@@ -52,9 +56,9 @@ export default function CustomDrawerContent(props: any) {
         </View>
 
         <View
-          style={{ paddingTop: 10 }}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
+          style={{ paddingTop: 10, backgroundColor: currentColors.drawerContent }}
+          //lightColor="#eee"
+          //darkColor="rgba(255,255,255,0.1)"
         >
           <DrawerItemList {...props} />
           
