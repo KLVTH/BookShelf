@@ -18,6 +18,7 @@ import { Category } from "../../components/Category";
 import EditSectionModal from "../../components/EditSectionModal";
 import { FileButton } from "../../components/FileButton";
 import { useTheme } from "../../components/ThemeContext"; // Importe o hook de tema
+import { AddSectionButton } from "@/src/components/AddSectionButton";
 import { BOOKS, CATEGORIES } from "../../utils/data";
 
 const STORAGE_KEY_CATEGORIES = "@categories";
@@ -299,7 +300,10 @@ const Home = () => {
           showsHorizontalScrollIndicator={true}
           horizontal
           ListFooterComponent={
-            <Button title="Adicionar Seção" onPress={handleButtonPress} />
+            <AddSectionButton
+              onPress={handleButtonPress}
+              title="Adicionar Seção"
+            ></AddSectionButton>
           }
         />
       </View>
@@ -341,9 +345,26 @@ const Home = () => {
           </View>
         )}
         ListFooterComponent={
-          <Button title="Adicionar Seção" onPress={handleButtonPress}  />
+          <View>
+            <AddSectionButton
+              onPress={handleButtonPress}
+              title="Adicionar Seção"
+            ></AddSectionButton>
+          </View>
         }
-        ListEmptyComponent={<Text style={{color: currentColors.text, flex: 1, padding: 10, textAlign: "center"}}>Adicione uma seção:</Text>}
+        ListEmptyComponent={
+          <Text
+            style={{
+              textAlign: "center",
+              margin: 20,
+              fontSize: 18,
+              color: "gray",
+              opacity: 0.4,
+            }}
+          >
+            Nenhuma Seção Encontrada
+          </Text>
+        }
       />
 
       {/* Modal para edição da seção */}
@@ -393,7 +414,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%"
+    width: "100%",
   },
   categoryListContainer: {
     paddingTop: 10,
@@ -409,7 +430,6 @@ const styles = StyleSheet.create({
   },
   sectionList: {
     width: "100%",
-
   },
   sectionListContent: {
     paddingBottom: 100,
