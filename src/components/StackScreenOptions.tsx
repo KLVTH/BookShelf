@@ -29,7 +29,7 @@ const CustomHeader = ({
     <View
       style={[
         styles.header,
-        { backgroundColor: theme === "dark" ? "#000" : "#fff" },
+        { backgroundColor: theme === "dark" ? "#121212" : "#fff" },
       ]}
     >
       <Ionicons
@@ -40,11 +40,13 @@ const CustomHeader = ({
         onPress={openDrawer} // Abre o Drawer ao pressionar o ícone
       />
       <Text style={[styles.title, { color: textColor }]}>{title}</Text>
-      <View style={{marginLeft: 60}}>
+      <View style={{ marginLeft: 60 }}>
         <SearchButton
-          onPress={() => router.push({
-            pathname: "/searchScreen"
-          })}
+          onPress={() =>
+            router.push({
+              pathname: "/searchScreen",
+            })
+          }
         />
       </View>
     </View>
