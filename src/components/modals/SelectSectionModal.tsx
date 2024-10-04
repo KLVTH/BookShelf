@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import Colors from "@/src/constants/Colors";
+import React, { useState, useRef } from "react";
 import {
   Modal,
   View,
@@ -7,7 +8,9 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Animated,
 } from "react-native";
+import { useTheme } from "../ThemeContext";
 
 interface SelectSectionModalProps {
   visible: boolean;
@@ -23,6 +26,9 @@ const SelectSectionModal: React.FC<SelectSectionModalProps> = ({
   onSectionSelect,
 }) => {
   const [itemName, setItemName] = useState("");
+  const { theme } = useTheme();
+  const currentColors = Colors[theme];
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const handleSectionSelect = (sectionTitle: string) => {
     if (itemName.trim()) {
@@ -33,32 +39,67 @@ const SelectSectionModal: React.FC<SelectSectionModalProps> = ({
     }
   };
 
-  return (
-    <Modal visible={visible} transparent={true} animationType="slide">
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Escolha a Seção e Nome do Item</Text>
+  const scrollViewHeight = 200; // Altura máxima do ScrollView
+  const listHeight = sections.length > 0 ? sections.length * 50 : 0; // Altura total da lista
+  const scrollIndicatorHeight = listHeight > 0 ? scrollViewHeight * (scrollViewHeight / listHeight) : 0;
 
-          {/* Campo de entrada para o nome do item */}
+  const handleClose = () => {
+    setItemName(""); // Limpa o texto no input
+    onClose(); // Chama a função original para fechar o modal
+  };
+
+  return (
+    <Modal visible={visible} transparent={true} animationType="fade">
+      <View style={styles.modalContainer}>
+        <View style={[styles.modalContent, { backgroundColor: currentColors.background2 }]}>
+          <Text style={[styles.modalTitle, { color: currentColors.text, marginBottom: 10 }]}>Digite o nome do Item:</Text>
           <TextInput
-            style={styles.input}
-            placeholder="Nome do PDF"
+            style={[styles.input, { color: currentColors.text }]}
+            placeholder="Nome do arquivo"
             value={itemName}
             onChangeText={setItemName}
+            placeholderTextColor={currentColors.text}
           />
-
-          {/* Lista de seções */}
-          <FlatList
-            data={sections}
-            keyExtractor={(item) => item.title}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleSectionSelect(item.title)}>
-                <Text style={styles.sectionItem}>{item.title}</Text>
-              </TouchableOpacity>
+          <Text style={[styles.modalTitle, { color: currentColors.text }]}>Selecione a seção:</Text>
+          <View style={{ maxHeight: scrollViewHeight }}>
+            <Animated.FlatList
+              data={sections}
+              keyExtractor={(item) => item.title}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }
+              )}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleSectionSelect(item.title)}>
+                  <Text style={[styles.sectionItem, { color: currentColors.text }]}>{item.title}</Text>
+                </TouchableOpacity>
+              )}
+            />
+            {/* Overlay para o indicador de rolagem */}
+            {listHeight > 0 && (
+              <View style={styles.scrollIndicator}>
+                <Animated.View
+                  style={[
+                    styles.indicator,
+                    { backgroundColor: currentColors.text },
+                    {
+                      height: scrollIndicatorHeight,
+                      transform: [{
+                        translateY: scrollY.interpolate({
+                          inputRange: [0, listHeight - scrollViewHeight],
+                          outputRange: [0, scrollViewHeight - scrollIndicatorHeight],
+                          extrapolate: 'clamp',
+                        }),
+                      }],
+                    },
+                  ]}
+                />
+              </View>
             )}
-          />
-
-          <TouchableOpacity onPress={onClose}>
+          </View>
+          <TouchableOpacity onPress={handleClose}>
             <Text style={styles.cancelText}>Cancelar</Text>
           </TouchableOpacity>
         </View>
@@ -72,17 +113,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0,0,0,0.7)",
   },
   modalContent: {
-    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
-    width: 300,
+    width: 340,
   },
   modalTitle: {
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: 20,
     fontWeight: "bold",
   },
   input: {
@@ -92,17 +131,37 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 8,
     borderRadius: 5,
+    color: "white",
   },
   sectionItem: {
     padding: 10,
     fontSize: 16,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
+    width: 280,
   },
   cancelText: {
     marginTop: 10,
     color: "red",
     textAlign: "center",
+    fontSize: 16,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#ccc',
+    width: 280,
+  },
+  scrollIndicator: {
+    position: 'absolute',
+    right: 5,
+    top: 0,
+    bottom: 0,
+    width: 5,
+    backgroundColor: 'transparent',
+  },
+  indicator: {
+    position: 'absolute',
+    right: 0,
+    backgroundColor: 'white',
+    width: 3,
   },
 });
 

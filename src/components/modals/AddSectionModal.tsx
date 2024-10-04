@@ -8,6 +8,9 @@ import {
   Alert,
   StyleSheet,
 } from "react-native";
+import { useTheme } from "../ThemeContext";
+import Colors from "@/src/constants/Colors";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface AddSectionModalProps {
   visible: boolean;
@@ -32,6 +35,9 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
   setSections,
 }) => {
   const [newSectionName, setNewSectionName] = useState("");
+  const { theme } = useTheme(); // Obtenha o tema atual
+  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+
 
   const confirmAddSection = () => {
     if (newSectionName.trim() === "") {
@@ -75,18 +81,24 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
   };
 
   return (
-    <Modal visible={visible} transparent={true} animationType="slide">
+    <Modal visible={visible} transparent={true} animationType="fade">
       <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Digite o nome da nova seção</Text>
+        <View style={[styles.modalContent, { backgroundColor: currentColors.background2}]}>
+          <View>
+            <Text style={[styles.modalTitle, {color: currentColors.text}]}>Adicionar Seção?</Text>
+          </View>
           <TextInput
             style={styles.input}
             value={newSectionName}
             onChangeText={setNewSectionName}
             placeholder="Nome da Seção"
+            placeholderTextColor={currentColors.text}
+
           />
-          <Button title="Adicionar" onPress={confirmAddSection} />
-          <Button title="Cancelar" onPress={onClose} color="red" />
+          <View style={{flexDirection: "row", gap: 10, justifyContent: "flex-end"}}>
+            <Button title="Cancelar" onPress={onClose} color="red" />
+            <Button title="Adicionar" onPress={confirmAddSection} color={"#332F35"}/>
+          </View>
         </View>
       </View>
     </Modal>
@@ -98,18 +110,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0,0,0,0.7)",
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "red",
     padding: 20,
     borderRadius: 10,
-    width: 300,
+    width: 340,
+    gap: 8
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 10,
     fontWeight: "bold",
+    color: "white",
   },
   input: {
     height: 40,
