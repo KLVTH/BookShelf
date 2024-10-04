@@ -17,7 +17,7 @@ interface EditSectionModalProps {
   onDelete: () => void;
 }
 
-const EditSectionModal = ({
+export const EditSectionModal = ({
   visible,
   onClose,
   currentTitle,
