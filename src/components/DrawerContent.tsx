@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -6,8 +5,8 @@ import {
 import { useRouter } from "expo-router";
 import { Image, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTheme } from "./ThemeContext";
 import Colors from "../constants/Colors";
+import { useTheme } from "./ThemeContext";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
@@ -21,17 +20,14 @@ export default function CustomDrawerContent(props: any) {
       style={{ flex: 1, backgroundColor: currentColors.drawerContent }}
       //lightColor="#eee"
       //darkColor="rgba(255,255,255,0.1)"
-      
     >
       <DrawerContentScrollView
         {...props}
         scrollEnabled={false}
-        contentContainerStyle={{ backgroundColor: "#red", paddingTop: top }}
+        contentContainerStyle={{ paddingTop: top }}
       >
         <View
           style={{ padding: 16, backgroundColor: currentColors.drawerContent }}
-          //lightColor="#eee"
-          //darkColor="rgba(255,255,255,0.1)"
         >
           <Image
             source={require("./../assets/images/adaptive-icon.png")}
@@ -49,6 +45,7 @@ export default function CustomDrawerContent(props: any) {
               fontSize: 18,
               fontWeight: "500",
               color: "#f97316",
+              fontFamily: "PlusJakartaSans",
             }}
           >
             BookShelf
@@ -56,12 +53,11 @@ export default function CustomDrawerContent(props: any) {
         </View>
 
         <View
-          style={{ paddingTop: 10, backgroundColor: currentColors.drawerContent }}
-          //lightColor="#eee"
-          //darkColor="rgba(255,255,255,0.1)"
+          style={{
+            backgroundColor: currentColors.drawerContent,
+          }}
         >
           <DrawerItemList {...props} />
-          
         </View>
       </DrawerContentScrollView>
       {/*O rodapé do Drawer

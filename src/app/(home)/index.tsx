@@ -19,6 +19,7 @@ import EditSectionModal from "../../components/EditSectionModal";
 import { FileButton } from "../../components/FileButton";
 import { useTheme } from "../../components/ThemeContext"; // Importe o hook de tema
 import { AddSectionButton } from "@/src/components/AddSectionButton";
+import { EditSectionButton } from "@/src/components/EditSectionButton";
 import { BOOKS, CATEGORIES } from "../../utils/data";
 
 const STORAGE_KEY_CATEGORIES = "@categories";
@@ -283,7 +284,7 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: currentColors.background }]}>
       <View style={styles.categoryListContainer}>
         <FlatList
           data={categories}
@@ -303,6 +304,7 @@ const Home = () => {
             <AddSectionButton
               onPress={handleButtonPress}
               title="Adicionar Seção"
+              buttonStyle={{ height: 45 }}
             ></AddSectionButton>
           }
         />
@@ -337,15 +339,17 @@ const Home = () => {
             <Text style={[styles.sectionHeader, { color: currentColors.text }]}>
               {title}
             </Text>
-
-            <Button
-              title="Editar"
-              onPress={() => openEditModal(title)} // Abre o modal de edição com o título da seção
-            />
+            <EditSectionButton
+              title="EDITAR"
+              onPress={() => openEditModal(title)}
+              buttonStyle={{ width: 80 }}
+            ></EditSectionButton>
           </View>
         )}
         ListFooterComponent={
-          <View>
+          <View
+            style={{ display: "flex", alignItems: "center", paddingTop: 15 }}
+          >
             <AddSectionButton
               onPress={handleButtonPress}
               title="Adicionar Seção"
@@ -419,7 +423,7 @@ const styles = StyleSheet.create({
   categoryListContainer: {
     paddingTop: 10,
     borderBottomWidth: 2,
-    borderBottomColor: "#F24E1E", // cor laranja
+    borderBottomColor: "#F97316", // cor laranja
   },
   categoryList: {
     height: 56,
