@@ -1,25 +1,35 @@
 // src/constants/Colors.ts
 
-import drawer from "expo-router/drawer";
-
 const Colors = {
   light: {
     background: "#FFFFFF",
     icon: "#000000",
     text: "#000000",
-    primary: "#F0F0F0",
-    placeholder: "#999999",
     bookComponent: "#E5E5E5",
-    drawerContent: "#eee"
+    drawerContent: "#eee",
+    raisinblack: "#28282bff",
+    raisinblack2: "#2c2a2bff",
+    spanishOrange: "#df6a19ff",
+    pumpkin: "#f96f17ff",
+    giantsOrange: "#f4581cff",
+    coquelicot: "#f24e1eff",
+    persianRed: "#d22b2bff",
+    fireEngineRed: "#ce2528ff",
   },
   dark: {
-    background: "#000000",
+    background: "#0A0A0A",
     icon: "#e6e6e6",
     text: "#e6e6e6",
-    primary: "#333333",
-    placeholder: "#BBBBBB",
-    bookComponent: "#161e26",
-    drawerContent: "#rgba(255,255,255,0.1)"
+    bookComponent: "#2C2A2B",
+    drawerContent: "#rgba(255,255,255,0.1)",
+    raisinblack: "#28282bff",
+    raisinblack2: "#2c2a2bff",
+    spanishOrange: "#df6a19ff",
+    pumpkin: "#f96f17ff",
+    giantsOrange: "#f4581cff",
+    coquelicot: "#f24e1eff",
+    persianRed: "#d22b2bff",
+    fireEngineRed: "#ce2528ff",
   },
 };
 
