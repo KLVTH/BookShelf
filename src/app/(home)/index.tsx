@@ -1,25 +1,23 @@
+import { AddSectionButton } from "@/src/components/AddSectionButton";
+import { EditSectionButton } from "@/src/components/EditSectionButton";
+import { AddSectionModal } from "@/src/components/modals/AddSectionModal";
+import { EditSectionModal } from "@/src/components/modals/EditSectionModal";
 import Colors from "@/src/constants/Colors"; // Importe suas cores
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
-  Button,
   FlatList,
-  Modal,
   SectionList,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { Book } from "../../components/Book";
 import { Category } from "../../components/Category";
-import EditSectionModal from "../../components/EditSectionModal";
 import { FileButton } from "../../components/FileButton";
 import { useTheme } from "../../components/ThemeContext"; // Importe o hook de tema
-import { AddSectionButton } from "@/src/components/AddSectionButton";
-import { EditSectionButton } from "@/src/components/EditSectionButton";
 import { BOOKS, CATEGORIES } from "../../utils/data";
 
 const STORAGE_KEY_CATEGORIES = "@categories";
@@ -284,7 +282,9 @@ const Home = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: currentColors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: currentColors.background }]}
+    >
       <View style={styles.categoryListContainer}>
         <FlatList
           data={categories}
@@ -381,25 +381,15 @@ const Home = () => {
       />
 
       {/* Modal para entrada do nome da nova seção */}
-      <Modal visible={modalVisible} transparent={true} animationType="slide">
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Digite o nome da nova seção</Text>
-            <TextInput
-              style={styles.input}
-              value={newSectionName}
-              onChangeText={setNewSectionName}
-              placeholder="Nome da Seção"
-            />
-            <Button title="Adicionar" onPress={confirmAddSection} />
-            <Button
-              title="Cancelar"
-              onPress={() => setModalVisible(false)}
-              color="red"
-            />
-          </View>
-        </View>
-      </Modal>
+      <AddSectionModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        sections={sections}
+        setCategories={setCategories}
+        setSections={setSections}
+        onSaveData={saveData} // Função que salva as categorias e seções no AsyncStorage
+      />
+
       <FileButton
         sections={sections} // Passa as seções disponíveis
         onAddItem={(sectionTitle, itemName, pdfUri) => {
