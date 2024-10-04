@@ -8,6 +8,8 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import { useTheme } from "../ThemeContext";
+import Colors from "@/src/constants/Colors";
 
 interface EditSectionModalProps {
   visible: boolean;
@@ -26,6 +28,9 @@ export const EditSectionModal = ({
 }: EditSectionModalProps) => {
   const [newTitle, setNewTitle] = useState(currentTitle);
   const [isRenameModalVisible, setRenameModalVisible] = useState(false);
+  const { theme } = useTheme();
+  const currentColors = Colors[theme];
+
 
   const openRenameModal = () => {
     setNewTitle(currentTitle); // Inicializa com o título atual
@@ -105,10 +110,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0,0,0,0.7)",
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "#ccc",
     padding: 20,
     borderRadius: 10,
     width: 300,

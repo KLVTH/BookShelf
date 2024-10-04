@@ -62,7 +62,7 @@ const SearchScreen = () => {
       <TextInput
         style={[styles.input, { color: currentColors.text }]}
         placeholder="Procure por um livro"
-        placeholderTextColor={currentColors.raisinblack2}
+        placeholderTextColor={currentColors.text}
         value={searchTerm}
         onChangeText={setSearchTerm} // Permite que o TextInput altere o estado
       />
