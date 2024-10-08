@@ -21,7 +21,7 @@ export function Category({
       style={[
         styles.container,
         isSelected && styles.selectedContainer,
-        { backgroundColor: isSelected ? currentColors.primary : "transparent" }, // Aplica a cor do tema se selecionado
+        { backgroundColor: isSelected ? currentColors.pumpkin : "transparent" }, // Aplica a cor do tema se selecionado
       ]}
       {...rest}
     >
@@ -29,7 +29,7 @@ export function Category({
         style={[
           styles.text,
           isSelected
-            ? { color: currentColors.selectedText }
+            ? { color: currentColors.text }
             : { color: currentColors.text }, // Aplica a cor do texto de acordo com o estado
         ]}
       >

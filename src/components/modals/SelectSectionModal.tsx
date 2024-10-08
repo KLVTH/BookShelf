@@ -40,7 +40,7 @@ const SelectSectionModal: React.FC<SelectSectionModalProps> = ({
   };
 
   const scrollViewHeight = 200; // Altura máxima do ScrollView
-  const listHeight = sections.length > 0 ? sections.length * 50 : 0; // Altura total da lista
+  const listHeight = 200; // Altura total da lista
   const scrollIndicatorHeight = listHeight > 0 ? scrollViewHeight * (scrollViewHeight / listHeight) : 0;
 
   const handleClose = () => {
