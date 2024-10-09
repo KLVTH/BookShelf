@@ -10,7 +10,7 @@ import { Drawer } from "expo-router/drawer";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
-import { ThemeProvider, useTheme } from "./../components/ThemeContext"; // Importa o contexto de tema
+import { ThemeProvider, useTheme } from "./../components/ThemeContext"; 
 import DrawerContent from "../components/DrawerContent";
 import DrawerScreenOptions from "../components/DrawerScreenOptions";
 

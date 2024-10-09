@@ -1,8 +1,8 @@
-import { Text, View } from "@/src/components/Themed"; // Usando os componentes Themed
-import Colors from "@/src/constants/Colors"; // Importa as cores
+import { Text, View } from "@/src/components/Themed"; 
+import Colors from "@/src/constants/Colors"; 
 import React from "react";
 import { StyleSheet, Switch } from "react-native";
-import { useTheme } from "../components/ThemeContext"; // Importa o ThemeContext
+import { useTheme } from "../components/ThemeContext"; 
 
 export default function SettingsScreen() {
   const { theme, toggleTheme } = useTheme(); 

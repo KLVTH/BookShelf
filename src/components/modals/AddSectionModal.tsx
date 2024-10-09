@@ -1,15 +1,15 @@
+import Colors from "@/src/constants/Colors";
 import React, { useState } from "react";
 import {
-  View,
+  Alert,
+  Modal,
+  StyleSheet,
   Text,
   TextInput,
-  Modal,
-  Alert,
-  StyleSheet,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { useTheme } from "../ThemeContext";
-import Colors from "@/src/constants/Colors";
 
 interface AddSectionModalProps {
   visible: boolean;
@@ -34,9 +34,8 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
   setSections,
 }) => {
   const [newSectionName, setNewSectionName] = useState("");
-  const { theme } = useTheme(); 
-  const currentColors = Colors[theme]; 
-
+  const { theme } = useTheme();
+  const currentColors = Colors[theme];
 
   const confirmAddSection = () => {
     if (newSectionName.trim() === "") {
@@ -79,6 +78,11 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
     setNewSectionName("");
   };
 
+  const handleClose = () => {
+    setNewSectionName(""); 
+    onClose(); 
+  };
+
   return (
     <Modal visible={visible} transparent={true} animationType="fade">
       <View style={styles.modalContainer}>
@@ -94,11 +98,11 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
             </Text>
           </View>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { color: currentColors.text }]}
             value={newSectionName}
             onChangeText={setNewSectionName}
             placeholder="Nome da Seção"
-            placeholderTextColor={currentColors.text}
+            placeholderTextColor={currentColors.placeholder}
           />
           <View
             style={{
@@ -107,13 +111,14 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
               justifyContent: "flex-end",
             }}
           >
-            <TouchableOpacity onPress={onClose}>
+            <TouchableOpacity onPress={handleClose}>
               <Text
                 style={{
                   marginTop: 10,
                   color: "red",
                   textAlign: "center",
                   fontSize: 16,
+                  fontWeight: "bold",
                 }}
               >
                 Cancelar
@@ -137,7 +142,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.7)",
   },
   modalContent: {
-    backgroundColor: "red",
     padding: 20,
     borderRadius: 10,
     width: 340,
@@ -160,7 +164,6 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#10B2FF",
     padding: 10,
-    marginBottom: 10,
     borderRadius: 5,
     elevation: 5,
   },
