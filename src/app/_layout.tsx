@@ -57,10 +57,9 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const { theme } = useTheme(); // Usa o hook de tema que criamos
+  const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
 
-  // Usa o tema com base na escolha do usuário
   return (
     <NavigationThemeProvider
       value={isDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme}

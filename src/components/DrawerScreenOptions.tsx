@@ -11,9 +11,9 @@ type DrawerScreenOptionsProps = {
 
 // Função que retorna as opções do Drawer
 const DrawerScreenOptions = ({ navigation }: DrawerScreenOptionsProps) => {
-  const { theme } = useTheme(); // Usa o contexto de tema
+  const { theme } = useTheme(); 
 
-  const menuIconColor = theme === "dark" ? "#e6e6e6" : "black"; // Define a cor do ícone com base no tema
+  const menuIconColor = theme === "dark" ? "#e6e6e6" : "black"; 
 
   return {
     drawerActiveBackgroundColor: "#F24E1E",
@@ -29,14 +29,13 @@ const DrawerScreenOptions = ({ navigation }: DrawerScreenOptionsProps) => {
       <Ionicons
         name="menu"
         size={40}
-        color={menuIconColor} // Cor do ícone baseada no tema
+        color={menuIconColor} 
         style={{ marginLeft: 15, marginVertical: 12 }}
-        onPress={() => navigation.toggleDrawer()} // Abre/fecha o Drawer
+        onPress={() => navigation.toggleDrawer()} 
       />
     ),
     
   };
 };
 
-// Exporta a função como padrão
 export default DrawerScreenOptions;

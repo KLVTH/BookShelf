@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from "react-native";
-import { useTheme } from "../ThemeContext";
+import { Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/src/constants/Colors";
+import { useTheme } from "../ThemeContext";
+import { RenameSectionModal } from "./RenameSectionModal"; 
 
 interface EditSectionModalProps {
   visible: boolean;
@@ -26,81 +20,77 @@ export const EditSectionModal = ({
   onSave,
   onDelete,
 }: EditSectionModalProps) => {
-  const [newTitle, setNewTitle] = useState(currentTitle);
   const [isRenameModalVisible, setRenameModalVisible] = useState(false);
   const { theme } = useTheme();
   const currentColors = Colors[theme];
 
-
   const openRenameModal = () => {
-    setNewTitle(currentTitle); // Inicializa com o título atual
-    setRenameModalVisible(true); // Abre o modal de renomear
+    setRenameModalVisible(true); 
   };
 
-  const handleRenameSave = () => {
-    if (newTitle.trim() === "") {
-      Alert.alert("Erro", "O novo nome da seção não pode ser vazio.");
-      return;
-    }
-    onSave(newTitle); // Chama a função para renomear
-    setRenameModalVisible(false); // Fecha o modal de renomear
+  const handleRenameSave = (newTitle: string) => {
+    onSave(newTitle); 
+    setRenameModalVisible(false); 
   };
 
   return (
-    <Modal visible={visible} transparent={true} animationType="slide">
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Editar Seção</Text>
-
-          <TouchableOpacity
-            style={styles.renameButton}
-            onPress={openRenameModal}
-          >
-            <Text style={styles.buttonText}>Renomear Seção</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
-            <Text style={styles.buttonText}>Remover Seção</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-            <Text style={styles.buttonText}>Cancelar</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Modal para renomear a seção */}
-      <Modal
-        visible={isRenameModalVisible}
-        transparent={true}
-        animationType="slide"
+    <Modal visible={visible} transparent={true} animationType="fade">
+      <View
+        style={[styles.modalContainer, { backgroundColor: "rgba(0,0,0,0.7)" }]}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Renomear Seção</Text>
-            <TextInput
-              style={styles.input}
-              value={newTitle}
-              onChangeText={setNewTitle}
-              placeholder="Novo Nome da Seção"
-            />
+        <View
+          style={[
+            styles.modalContent,
+            { backgroundColor: currentColors.background2 },
+          ]}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={[styles.modalTitle, { color: currentColors.text }]}>
+              Editar Seção
+            </Text>
 
+            <View >
+              <TouchableOpacity onPress={onClose}>
+                <Ionicons name="close" size={26} color={"red"} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 18,
+              justifyContent: "flex-start",
+              marginTop: 16,
+            }}
+          >
             <TouchableOpacity
-              style={styles.saveButton}
-              onPress={handleRenameSave}
+              style={styles.renameButton}
+              onPress={openRenameModal}
             >
-              <Text style={styles.buttonText}>Salvar Novo Nome</Text>
+              <Text style={styles.buttonText}>Renomear</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => setRenameModalVisible(false)}
-            >
-              <Text style={styles.buttonText}>Cancelar</Text>
+            <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
+              <Text style={styles.buttonText}>Remover</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </View>
+
+      {/* Modal de renomear seção */}
+      <RenameSectionModal
+        visible={isRenameModalVisible}
+        onClose={() => setRenameModalVisible(false)}
+        currentTitle={currentTitle}
+        onSave={handleRenameSave}
+      />
     </Modal>
   );
 };
@@ -110,49 +100,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.7)",
   },
   modalContent: {
-    backgroundColor: "#ccc",
     padding: 20,
     borderRadius: 10,
-    width: 300,
+    width: 340,
   },
   modalTitle: {
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: 20,
+    marginBottom: 14,
     fontWeight: "bold",
   },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 8,
-    borderRadius: 5,
-  },
-  saveButton: {
-    backgroundColor: "blue",
+  renameButton: {
+    backgroundColor: "#10B2FF",
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
+    elevation: 5,
   },
   deleteButton: {
-    backgroundColor: "red",
+    backgroundColor: "#D9163F",
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-  },
-  renameButton: {
-    backgroundColor: "orange",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-  cancelButton: {
-    backgroundColor: "gray",
-    padding: 10,
-    borderRadius: 5,
+    elevation: 5,
   },
   buttonText: {
     color: "white",

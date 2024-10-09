@@ -3,14 +3,13 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Modal,
   Alert,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import { useTheme } from "../ThemeContext";
 import Colors from "@/src/constants/Colors";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface AddSectionModalProps {
   visible: boolean;
@@ -35,8 +34,8 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
   setSections,
 }) => {
   const [newSectionName, setNewSectionName] = useState("");
-  const { theme } = useTheme(); // Obtenha o tema atual
-  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+  const { theme } = useTheme(); 
+  const currentColors = Colors[theme]; 
 
 
   const confirmAddSection = () => {
@@ -83,9 +82,16 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
   return (
     <Modal visible={visible} transparent={true} animationType="fade">
       <View style={styles.modalContainer}>
-        <View style={[styles.modalContent, { backgroundColor: currentColors.background2}]}>
+        <View
+          style={[
+            styles.modalContent,
+            { backgroundColor: currentColors.background2 },
+          ]}
+        >
           <View>
-            <Text style={[styles.modalTitle, {color: currentColors.text}]}>Adicionar Seção?</Text>
+            <Text style={[styles.modalTitle, { color: currentColors.text }]}>
+              Adicionar Seção?
+            </Text>
           </View>
           <TextInput
             style={styles.input}
@@ -93,11 +99,29 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
             onChangeText={setNewSectionName}
             placeholder="Nome da Seção"
             placeholderTextColor={currentColors.text}
-
           />
-          <View style={{flexDirection: "row", gap: 10, justifyContent: "flex-end"}}>
-            <Button title="Cancelar" onPress={onClose} color="red" />
-            <Button title="Adicionar" onPress={confirmAddSection} color={"#332F35"}/>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 18,
+              justifyContent: "flex-end",
+            }}
+          >
+            <TouchableOpacity onPress={onClose}>
+              <Text
+                style={{
+                  marginTop: 10,
+                  color: "red",
+                  textAlign: "center",
+                  fontSize: 16,
+                }}
+              >
+                Cancelar
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={confirmAddSection}>
+              <Text style={styles.buttonText}>Adicionar</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -117,7 +141,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: 340,
-    gap: 8
+    gap: 8,
   },
   modalTitle: {
     fontSize: 20,
@@ -132,5 +156,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 8,
     borderRadius: 5,
+  },
+  button: {
+    backgroundColor: "#10B2FF",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    elevation: 5,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

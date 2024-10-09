@@ -12,14 +12,13 @@ export default function CustomDrawerContent(props: any) {
   const router = useRouter();
   const { top, bottom } = useSafeAreaInsets(); // Obtém os valores das margens seguras no topo e na parte inferior da tela.
 
-  const { theme } = useTheme(); // Obtenha o tema atual
-  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+  const { theme } = useTheme(); 
+  const currentColors = Colors[theme]; 
 
   return (
     <View
       style={{ flex: 1, backgroundColor: currentColors.drawerContent }}
-      //lightColor="#eee"
-      //darkColor="rgba(255,255,255,0.1)"
+      
     >
       <DrawerContentScrollView
         {...props}
