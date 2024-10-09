@@ -55,7 +55,7 @@ export const RenameSectionModal = ({
             value={newTitle}
             onChangeText={setNewTitle}
             placeholder="Novo Nome da Seção"
-            placeholderTextColor={currentColors.text}
+            placeholderTextColor={currentColors.placeholder}
           />
 
           <View
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   saveButton: {
     backgroundColor: "#10B2FF",
     padding: 10,
-    marginBottom: 10,
     borderRadius: 5,
     width: 80,
     elevation: 5,
@@ -120,6 +119,7 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     fontSize: 16,
+    fontWeight: "bold",
   },
   buttonText: {
     color: "white",

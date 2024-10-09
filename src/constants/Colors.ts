@@ -1,5 +1,3 @@
-// src/constants/Colors.ts
-
 const Colors = {
   light: {
     background: "#FFFFFF",
@@ -8,6 +6,7 @@ const Colors = {
     text: "#000000",
     bookComponent: "#E5E5E5",
     drawerContent: "#eee",
+    placeholder: "#A9A9A9",
     raisinblack: "#28282bff",
     raisinblack2: "#2c2a2bff",
     spanishOrange: "#df6a19ff",
@@ -24,6 +23,8 @@ const Colors = {
     text: "#e6e6e6",
     bookComponent: "#2C2A2B",
     drawerContent: "#rgba(255,255,255,0.1)",
+    placeholder: "#A9A9A9",
+
     raisinblack: "#28282bff",
     raisinblack2: "#2c2a2bff",
     spanishOrange: "#df6a19ff",

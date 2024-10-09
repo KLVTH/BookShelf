@@ -1,16 +1,16 @@
 import Colors from "@/src/constants/Colors";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   View,
   Text,
   TextInput,
-  FlatList,
   TouchableOpacity,
   StyleSheet,
-  Animated,
 } from "react-native";
 import { useTheme } from "../ThemeContext";
+import DropDownPicker from "react-native-dropdown-picker";
+import { Ionicons } from "@expo/vector-icons"; // Importando Ionicons
 
 interface SelectSectionModalProps {
   visible: boolean;
@@ -28,80 +28,137 @@ const SelectSectionModal: React.FC<SelectSectionModalProps> = ({
   const [itemName, setItemName] = useState("");
   const { theme } = useTheme();
   const currentColors = Colors[theme];
-  const scrollY = useRef(new Animated.Value(0)).current;
 
-  const handleSectionSelect = (sectionTitle: string) => {
-    if (itemName.trim()) {
-      onSectionSelect(sectionTitle, itemName);
+  const [open, setOpen] = useState(false);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const [sectionItems, setSectionItems] = useState<
+    { label: string; value: string }[]
+  >([]);
+
+  useEffect(() => {
+    setSectionItems(
+      sections.map((section) => ({
+        label: section.title,
+        value: section.title,
+      })),
+    );
+  }, [sections]);
+
+  const handleSectionSelect = () => {
+    if (itemName.trim() && selectedSection) {
+      onSectionSelect(selectedSection, itemName);
       setItemName("");
+      setSelectedSection(null);
     } else {
-      alert("Por favor, insira um nome para o item.");
+      alert("Por favor, insira um nome para o item e selecione uma seção.");
     }
   };
 
-  const scrollViewHeight = 200; // Altura máxima do ScrollView
-  const listHeight = 200; // Altura total da lista
-  const scrollIndicatorHeight = listHeight > 0 ? scrollViewHeight * (scrollViewHeight / listHeight) : 0;
-
   const handleClose = () => {
-    setItemName(""); // Limpa o texto no input
-    onClose(); // Chama a função original para fechar o modal
+    setItemName("");
+    setSelectedSection(null);
+    onClose();
   };
 
   return (
     <Modal visible={visible} transparent={true} animationType="fade">
       <View style={styles.modalContainer}>
-        <View style={[styles.modalContent, { backgroundColor: currentColors.background2 }]}>
-          <Text style={[styles.modalTitle, { color: currentColors.text, marginBottom: 10 }]}>Digite o nome do Item:</Text>
+        <View
+          style={[
+            styles.modalContent,
+            { backgroundColor: currentColors.background2 },
+          ]}
+        >
+          <Text
+            style={[
+              styles.modalTitle,
+              { color: currentColors.text, marginBottom: 10 },
+            ]}
+          >
+            Digite o nome do Item:
+          </Text>
           <TextInput
             style={[styles.input, { color: currentColors.text }]}
             placeholder="Nome do arquivo"
             value={itemName}
             onChangeText={setItemName}
-            placeholderTextColor={currentColors.text}
+            placeholderTextColor={currentColors.placeholder}
           />
-          <Text style={[styles.modalTitle, { color: currentColors.text }]}>Selecione a seção:</Text>
-          <View style={{ maxHeight: scrollViewHeight }}>
-            <Animated.FlatList
-              data={sections}
-              keyExtractor={(item) => item.title}
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                { useNativeDriver: false }
-              )}
-              showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={styles.separator} />}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleSectionSelect(item.title)}>
-                  <Text style={[styles.sectionItem, { color: currentColors.text }]}>{item.title}</Text>
-                </TouchableOpacity>
-              )}
-            />
-            {/* Overlay para o indicador de rolagem */}
-            {listHeight > 0 && (
-              <View style={styles.scrollIndicator}>
-                <Animated.View
-                  style={[
-                    styles.indicator,
-                    { backgroundColor: currentColors.text },
-                    {
-                      height: scrollIndicatorHeight,
-                      transform: [{
-                        translateY: scrollY.interpolate({
-                          inputRange: [0, listHeight - scrollViewHeight],
-                          outputRange: [0, scrollViewHeight - scrollIndicatorHeight],
-                          extrapolate: 'clamp',
-                        }),
-                      }],
-                    },
-                  ]}
-                />
-              </View>
+
+          <Text style={[styles.modalTitle, { color: currentColors.text }]}>
+            Selecione a seção:
+          </Text>
+          <DropDownPicker
+            open={open}
+            value={selectedSection}
+            items={sectionItems}
+            setOpen={setOpen}
+            setValue={setSelectedSection}
+            setItems={setSectionItems}
+            placeholder="Selecione uma seção"
+            language="PT"
+            showTickIcon={true}
+            containerStyle={{ marginBottom: 20, marginTop: 10 }}
+            style={{
+              backgroundColor: currentColors.background2,
+              borderColor: "gray",
+            }}
+            dropDownContainerStyle={{
+              backgroundColor: currentColors.background2,
+              borderColor: "gray",
+            }}
+            labelStyle={{ color: currentColors.text }}
+            textStyle={{ color: currentColors.text }}
+            arrowIconStyle={{
+              width: 20,
+              height: 20,
+            }}
+            ArrowUpIconComponent={({ style }) => (
+              <Ionicons
+                name="chevron-up"
+                style={style}
+                size={20}
+                color={currentColors.icon}
+              />
             )}
+            ArrowDownIconComponent={({ style }) => (
+              <Ionicons
+                name="chevron-down"
+                style={style}
+                size={20}
+                color={currentColors.icon}
+              />
+            )}
+            TickIconComponent={({ style }) => (
+              <Ionicons
+                name="checkmark"
+                style={style}
+                size={20}
+                color={currentColors.text}
+              />
+            )}
+          />
+
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 18,
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity onPress={handleClose}>
+              <Text style={styles.cancelText}>Cancelar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleSectionSelect}
+              style={styles.button}
+            >
+              <Text style={styles.confirmText}>
+                Confirmar
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={handleClose}>
-            <Text style={styles.cancelText}>Cancelar</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -128,40 +185,28 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 15,
     paddingHorizontal: 8,
     borderRadius: 5,
     color: "white",
   },
-  sectionItem: {
-    padding: 10,
+  confirmText: {
+    color: "white",
+    textAlign: "center",
     fontSize: 16,
-    width: 280,
+    fontWeight: "bold",
   },
   cancelText: {
-    marginTop: 10,
     color: "red",
     textAlign: "center",
     fontSize: 16,
+    fontWeight: "bold",
   },
-  separator: {
-    height: 1,
-    backgroundColor: '#ccc',
-    width: 280,
-  },
-  scrollIndicator: {
-    position: 'absolute',
-    right: 5,
-    top: 0,
-    bottom: 0,
-    width: 5,
-    backgroundColor: 'transparent',
-  },
-  indicator: {
-    position: 'absolute',
-    right: 0,
-    backgroundColor: 'white',
-    width: 3,
+  button: {
+    backgroundColor: "#10B2FF",
+    padding: 10,
+    borderRadius: 5,
+    elevation: 5,
   },
 });
 
