@@ -1,4 +1,3 @@
-// app/home/_layout.tsx
 import StackScreenOptions from "@/src/components/StackScreenOptions";
 import { Stack } from "expo-router";
 

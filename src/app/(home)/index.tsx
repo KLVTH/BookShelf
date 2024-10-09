@@ -2,7 +2,7 @@ import { AddSectionButton } from "@/src/components/AddSectionButton";
 import { EditSectionButton } from "@/src/components/EditSectionButton";
 import { AddSectionModal } from "@/src/components/modals/AddSectionModal";
 import { EditSectionModal } from "@/src/components/modals/EditSectionModal";
-import Colors from "@/src/constants/Colors"; // Importe suas cores
+import Colors from "@/src/constants/Colors"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
@@ -17,15 +17,15 @@ import {
 import { Book } from "../../components/Book";
 import { Category } from "../../components/Category";
 import { FileButton } from "../../components/FileButton";
-import { useTheme } from "../../components/ThemeContext"; // Importe o hook de tema
+import { useTheme } from "../../components/ThemeContext";
 import { BOOKS, CATEGORIES } from "../../utils/data";
 
 const STORAGE_KEY_CATEGORIES = "@categories";
 const STORAGE_KEY_SECTIONS = "@sections";
 
 const Home = () => {
-  const { theme } = useTheme(); // Obtenha o tema atual
-  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+  const { theme } = useTheme(); 
+  const currentColors = Colors[theme]; 
 
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [categories, setCategories] = useState(CATEGORIES);
@@ -205,45 +205,6 @@ const Home = () => {
     setModalVisible(true);
   }
 
-  // Função para confirmar a adição da nova seção
-  const confirmAddSection = () => {
-    if (newSectionName.trim() === "") {
-      Alert.alert("Erro", "O nome da seção não pode ser vazio.");
-      return;
-    }
-
-    // Verificar se já existe uma seção com o mesmo nome
-    const sectionExists = sections.some(
-      (section) =>
-        section.title.toLowerCase() === newSectionName.trim().toLowerCase(),
-    );
-
-    if (sectionExists) {
-      Alert.alert("Erro", "Já existe uma seção com esse nome.");
-      return;
-    }
-
-    const newCategory = newSectionName.trim();
-    const newSection = {
-      title: newCategory,
-      data: [], // Defina os itens que serão adicionados à nova seção
-    };
-
-    // Atualizar categorias e seções
-    const updatedCategories = [...categories, newCategory];
-    const updatedSections = [...sections, newSection];
-
-    setCategories(updatedCategories);
-    setSections(updatedSections);
-
-    // Salvar os dados no AsyncStorage
-    saveData(updatedCategories, updatedSections);
-
-    // Fechar o modal e limpar o campo de entrada
-    setModalVisible(false);
-    setNewSectionName("");
-  };
-
   // Função para remover uma seção
   const handleRemoveSection = () => {
     if (sectionToEdit) {
@@ -377,7 +338,7 @@ const Home = () => {
         onClose={() => setEditModalVisible(false)}
         currentTitle={sectionToEdit || ""}
         onSave={handleEditSection}
-        onDelete={handleRemoveSection} // Passando a função de remover
+        onDelete={handleRemoveSection} 
       />
 
       {/* Modal para entrada do nome da nova seção */}

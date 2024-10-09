@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { DocumentPickerResult } from "expo-document-picker";
-import SelectSectionModal from "./modals/SelectSectionModal"; // Importar o componente do modal
+import SelectSectionModal from "./modals/SelectSectionModal"; 
 
 export const FileButton = ({
   onAddItem,
@@ -23,15 +23,15 @@ export const FileButton = ({
     if (result.assets && result.assets[0].uri) {
       const pdfUri = result.assets[0].uri;
       setSelectedPdf(pdfUri);
-      setModalVisible(true); // Exibir o modal ao selecionar um PDF
+      setModalVisible(true); 
     }
   }
 
   const handleSectionSelect = (sectionTitle: string, itemName: string) => {
     if (selectedPdf) {
       onAddItem(sectionTitle, itemName, selectedPdf);
-      setModalVisible(false); // Fechar o modal após adicionar o item
-      setSelectedPdf(null); // Limpar o PDF selecionado
+      setModalVisible(false); 
+      setSelectedPdf(null); 
     }
   };
 

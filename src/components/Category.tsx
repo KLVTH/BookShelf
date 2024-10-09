@@ -13,15 +13,14 @@ export function Category({
   isSelected = false,
   ...rest
 }: CategoryProps) {
-  const { theme } = useTheme(); // Obtenha o tema atual
-  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
-
+  const { theme } = useTheme(); 
+  const currentColors = Colors[theme]; 
   return (
     <Pressable
       style={[
         styles.container,
         isSelected && styles.selectedContainer,
-        { backgroundColor: isSelected ? currentColors.pumpkin : "transparent" }, // Aplica a cor do tema se selecionado
+        { backgroundColor: isSelected ? currentColors.pumpkin : "transparent" }, 
       ]}
       {...rest}
     >
@@ -30,7 +29,7 @@ export function Category({
           styles.text,
           isSelected
             ? { color: currentColors.text }
-            : { color: currentColors.text }, // Aplica a cor do texto de acordo com o estado
+            : { color: currentColors.text }, 
         ]}
       >
         {title}

@@ -1,14 +1,14 @@
 import { forwardRef } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Pressable, StyleSheet } from "react-native";
-import { useTheme } from "./../components/ThemeContext"; // Importando o ThemeContext
+import { useTheme } from "./../components/ThemeContext"; 
 
 export const SearchButton = forwardRef<
   typeof Pressable,
   { onPress?: () => void }
   >(({ onPress }, ref) => {
-    const { theme } = useTheme(); // Obtendo o tema atual
-    const iconColor = theme === "dark" ? "#e6e6e6" : "black"; // Define a cor do ícone com base no tema
+    const { theme } = useTheme(); 
+    const iconColor = theme === "dark" ? "#e6e6e6" : "black"; 
 
     return (
       <Pressable onPress={onPress}>
@@ -16,7 +16,7 @@ export const SearchButton = forwardRef<
           <FontAwesome
             name="search"
             size={35}
-            color={iconColor} // Aplica a cor do ícone baseada no tema
+            color={iconColor} 
             style={[
               styles.headerRight,
               {
