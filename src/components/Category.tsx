@@ -1,7 +1,7 @@
 import { Pressable, PressableProps, StyleSheet } from "react-native";
 import { Text } from "@/src/components/Themed";
-import Colors from "@/src/constants/Colors"; // Importe suas cores
-import { useTheme } from "./../components/ThemeContext"; // Importe o hook de tema
+import Colors from "@/src/constants/Colors"; 
+import { useTheme } from "./../components/ThemeContext"; 
 
 type CategoryProps = PressableProps & {
   title: string;
@@ -20,7 +20,11 @@ export function Category({
       style={[
         styles.container,
         isSelected && styles.selectedContainer,
-        { backgroundColor: isSelected ? currentColors.pumpkin : "transparent" }, 
+        {
+          borderBottomColor: isSelected
+            ? currentColors.selectedCategory
+            : "transparent",
+        },
       ]}
       {...rest}
     >
@@ -28,8 +32,8 @@ export function Category({
         style={[
           styles.text,
           isSelected
-            ? { color: currentColors.text }
-            : { color: currentColors.text }, 
+            ? { color: currentColors.selectedCategory }
+            : { color: currentColors.placeholder },
         ]}
       >
         {title}
@@ -40,16 +44,15 @@ export function Category({
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
+    height: 50,
     justifyContent: "center",
-    borderRadius: 9999,
     paddingHorizontal: 16,
   },
   selectedContainer: {
-    // Remover essa propriedade, pois a cor é gerenciada pelo tema
+    borderBottomWidth: 3
   },
   text: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "semibold",
   },
 });

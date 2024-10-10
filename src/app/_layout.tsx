@@ -64,7 +64,7 @@ function RootLayoutNav() {
     <NavigationThemeProvider
       value={isDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme}
     >
-      <Drawer drawerContent={DrawerContent} screenOptions={DrawerScreenOptions} initialRouteName="home">
+      <Drawer drawerContent={DrawerContent} screenOptions={DrawerScreenOptions} initialRouteName="home" >
         <Drawer.Screen
           name="(home)"
           options={{

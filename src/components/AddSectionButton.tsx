@@ -28,7 +28,7 @@ export const AddSectionButton: React.FC<AddSectionButtonProps> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.button, buttonStyle, { backgroundColor: "#F96F17" }]}
+      style={[styles.button, buttonStyle, { backgroundColor: "#EC1945" }]}
       activeOpacity={0.7} // Define a opacidade quando pressionado
     >
       <Text style={[styles.text, textStyle, { color: currentColors.text }]}>
