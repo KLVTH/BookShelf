@@ -1,13 +1,19 @@
 import { useLocalSearchParams } from "expo-router";
-import { StyleSheet, Dimensions, View, Text } from "react-native";
+import { StyleSheet, Dimensions, View } from "react-native";
 import Pdf from "react-native-pdf";
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const pdfpage = () => {
   const { name, uri } = useLocalSearchParams<{ name: string; uri: string }>();
+  const navigation = useNavigation(); 
+  useEffect(() => {
+    // Define o título do cabeçalho com o nome do PDF
+    navigation.setOptions({ title: name });
+  }, [name, navigation]);
+
   return (
     <View style={styles.container}>
-      {/*<Text>{name}</Text>
-      <Text>{uri}</Text>*/}
       <Pdf
         source={{
           uri,
