@@ -16,17 +16,14 @@ export default function CustomDrawerContent(props: any) {
   const currentColors = Colors[theme]; 
 
   return (
-    <View
-      style={{ flex: 1, backgroundColor: currentColors.drawerContent }}
-      
-    >
+    <View style={{ flex: 1, backgroundColor: currentColors.background }}>
       <DrawerContentScrollView
         {...props}
         scrollEnabled={false}
         contentContainerStyle={{ paddingTop: top }}
       >
         <View
-          style={{ padding: 16, backgroundColor: currentColors.drawerContent }}
+          style={{ padding: 16, backgroundColor: currentColors.background }}
         >
           <Image
             source={require("./../assets/images/adaptive-icon.png")}
@@ -42,8 +39,8 @@ export default function CustomDrawerContent(props: any) {
               alignSelf: "center",
               paddingTop: 10,
               fontSize: 18,
-              fontWeight: "500",
-              color: "#f97316",
+              fontWeight: "bold",
+              color: "#10B2FF",
               fontFamily: "PlusJakartaSans",
             }}
           >
@@ -53,7 +50,7 @@ export default function CustomDrawerContent(props: any) {
 
         <View
           style={{
-            backgroundColor: currentColors.drawerContent,
+            backgroundColor: currentColors.background,
           }}
         >
           <DrawerItemList {...props} />

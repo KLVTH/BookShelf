@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
   title: {
     marginRight: 12,
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: "semibold",
   },
 });

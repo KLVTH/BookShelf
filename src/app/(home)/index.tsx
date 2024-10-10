@@ -2,7 +2,7 @@ import { AddSectionButton } from "@/src/components/AddSectionButton";
 import { EditSectionButton } from "@/src/components/EditSectionButton";
 import { AddSectionModal } from "@/src/components/modals/AddSectionModal";
 import { EditSectionModal } from "@/src/components/modals/EditSectionModal";
-import Colors from "@/src/constants/Colors"; 
+import Colors from "@/src/constants/Colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
@@ -24,8 +24,8 @@ const STORAGE_KEY_CATEGORIES = "@categories";
 const STORAGE_KEY_SECTIONS = "@sections";
 
 const Home = () => {
-  const { theme } = useTheme(); 
-  const currentColors = Colors[theme]; 
+  const { theme } = useTheme();
+  const currentColors = Colors[theme];
 
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [categories, setCategories] = useState(CATEGORIES);
@@ -257,16 +257,22 @@ const Home = () => {
               isSelected={item === category}
             />
           )}
-          style={styles.categoryList}
+          showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.categoryListContent}
-          showsHorizontalScrollIndicator={true}
           horizontal
-          ListFooterComponent={
-            <AddSectionButton
-              onPress={handleButtonPress}
-              title="Adicionar Seção"
-              buttonStyle={{ height: 45 }}
-            ></AddSectionButton>
+          ListEmptyComponent={
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 18,
+                color: "gray",
+                opacity: 0.4,
+                justifyContent: "center",
+                flex: 1,
+              }}
+            >
+              Adicione uma seção
+            </Text>
           }
         />
       </View>
@@ -295,15 +301,15 @@ const Home = () => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              marginTop: 18,
+              marginBottom: 16, 
             }}
           >
             <Text style={[styles.sectionHeader, { color: currentColors.text }]}>
               {title}
             </Text>
             <EditSectionButton
-              title="EDITAR"
               onPress={() => openEditModal(title)}
-              buttonStyle={{ width: 80 }}
             ></EditSectionButton>
           </View>
         )}
@@ -338,7 +344,7 @@ const Home = () => {
         onClose={() => setEditModalVisible(false)}
         currentTitle={sectionToEdit || ""}
         onSave={handleEditSection}
-        onDelete={handleRemoveSection} 
+        onDelete={handleRemoveSection}
       />
 
       {/* Modal para entrada do nome da nova seção */}
@@ -372,16 +378,13 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   categoryListContainer: {
-    paddingTop: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: "#F97316", // cor laranja
+    borderBottomWidth: 0.5,
+    borderBottomColor: "108, 117, 125, 0.5",
   },
-  categoryList: {
-    height: 56,
-  },
+
   categoryListContent: {
     gap: 12,
-    paddingHorizontal: 32,
+    paddingHorizontal: 18,
   },
   sectionList: {
     width: "100%",
@@ -391,10 +394,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   sectionHeader: {
-    marginBottom: 16,
-    marginTop: 32,
-    fontSize: 22,
-    fontWeight: "800",
+    fontSize: 24,
+    fontWeight: "bold",
+    flex: 1
   },
   modalContainer: {
     flex: 1,
