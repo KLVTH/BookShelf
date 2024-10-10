@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { View, TextInput, FlatList, Text, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
-import { Section, BookItem } from "./../../utils/data"; // Ajuste o caminho
-import { Book } from "@/src/components/Book";
+import { Book } from "@/src/components/buttons/Book";
+import { useTheme } from "@/src/hooks/ThemeContext";
+import Colors from "@/src/styles/Colors";
+import AsyncStorage from "@react-native-async-storage/async-storage"; 
 import { router } from "expo-router";
-import { useTheme } from "@/src/components/ThemeContext";
-import Colors from "@/src/constants/Colors";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import { Section } from "./../../utils/data"; 
 
-const STORAGE_KEY_SECTIONS = "@sections"; // Defina a chave do AsyncStorage
+const STORAGE_KEY_SECTIONS = "@sections"; 
 
 const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [sections, setSections] = useState<Section[]>([]); // Estado para armazenar as seções carregadas
+  const [sections, setSections] = useState<Section[]>([]);
 
-  const { theme } = useTheme(); // Obtenha o tema atual
-  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+  const { theme } = useTheme(); 
+  const currentColors = Colors[theme]; 
 
   useEffect(() => {
     const loadData = async () => {
@@ -23,7 +23,7 @@ const SearchScreen = () => {
         if (savedSections) {
           setSections(JSON.parse(savedSections));
         } else {
-          setSections([]); // Inicializa como vazio se não houver dados
+          setSections([]);
         }
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
@@ -31,13 +31,13 @@ const SearchScreen = () => {
     };
 
     loadData();
-  }, []); // Carrega os dados apenas uma vez ao montar o componente
+  }, []); 
 
-  // Função para filtrar os livros com base no termo de busca
+  
   const filterBooks = () => {
-    // Se não houver termo de busca, retorna todos os livros
+    
     if (!searchTerm) {
-      return sections.flatMap((section) => section.data); // Retorna todos os livros de todas as seções
+      return sections.flatMap((section) => section.data);
     }
 
     return sections.flatMap((section) =>
@@ -64,14 +64,14 @@ const SearchScreen = () => {
         placeholder="Procure por um livro"
         placeholderTextColor={currentColors.text}
         value={searchTerm}
-        onChangeText={setSearchTerm} // Permite que o TextInput altere o estado
+        onChangeText={setSearchTerm} 
       />
 
       {filteredBooks.length === 0 ? ( // Verifica se há livros filtrados
         <Text style={styles.noResults}>Nenhum Resultado Encontrado.</Text>
       ) : (
         <FlatList
-          data={filteredBooks} // Usa os livros filtrados aqui
+          data={filteredBooks} 
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View>

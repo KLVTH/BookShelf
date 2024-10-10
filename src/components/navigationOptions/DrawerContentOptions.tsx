@@ -5,15 +5,15 @@ import {
 import { useRouter } from "expo-router";
 import { Image, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Colors from "../constants/Colors";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../../hooks/ThemeContext";
+import Colors from "../../styles/Colors";
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
   const { top, bottom } = useSafeAreaInsets(); // Obtém os valores das margens seguras no topo e na parte inferior da tela.
 
-  const { theme } = useTheme(); 
-  const currentColors = Colors[theme]; 
+  const { theme } = useTheme();
+  const currentColors = Colors[theme];
 
   return (
     <View style={{ flex: 1, backgroundColor: currentColors.background }}>
@@ -26,7 +26,7 @@ export default function CustomDrawerContent(props: any) {
           style={{ padding: 16, backgroundColor: currentColors.background }}
         >
           <Image
-            source={require("./../assets/images/adaptive-icon.png")}
+            source={require("../../assets/images/adaptive-icon.png")}
             style={{
               height: 112,
               width: 112,

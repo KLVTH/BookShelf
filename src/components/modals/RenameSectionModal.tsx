@@ -1,15 +1,15 @@
+import Colors from "@/src/styles/Colors";
 import React, { useState } from "react";
 import {
   Alert,
   Modal,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  StyleSheet,
 } from "react-native";
-import { useTheme } from "../ThemeContext";
-import Colors from "@/src/constants/Colors";
+import { useTheme } from "../../hooks/ThemeContext";
 
 interface RenameSectionModalProps {
   visible: boolean;
@@ -33,8 +33,8 @@ export const RenameSectionModal = ({
       Alert.alert("Erro", "O novo nome da seção não pode ser vazio.");
       return;
     }
-    onSave(newTitle); 
-    onClose(); 
+    onSave(newTitle);
+    onClose();
   };
 
   return (
@@ -43,7 +43,7 @@ export const RenameSectionModal = ({
         <View
           style={[
             styles.modalContent,
-            { backgroundColor: currentColors.background2 },
+            { backgroundColor: currentColors.background },
           ]}
         >
           <Text style={[styles.modalTitle, { color: currentColors.text }]}>

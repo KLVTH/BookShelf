@@ -1,4 +1,4 @@
-import StackScreenOptions from "@/src/components/StackScreenOptions";
+import StackScreenOptions from "@/src/components/navigationOptions/StackScreenOptions";
 import { Stack } from "expo-router";
 
 export default function HomeLayout() {
@@ -10,11 +10,10 @@ export default function HomeLayout() {
         name="searchScreen"
         options={{
           title: "Buscar",
-      
+
           headerTitleStyle: {
             fontFamily: "PlusJakartaSans",
             fontSize: 30,
-            
           },
         }}
       />

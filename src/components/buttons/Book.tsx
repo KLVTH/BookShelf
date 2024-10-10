@@ -1,15 +1,14 @@
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import {
-  Image,
+  StyleSheet,
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
-  StyleSheet,
 } from "react-native";
-import { View } from "./Themed";
-import { useTheme } from "./ThemeContext";
-import Colors from "../constants/Colors";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useTheme } from "../../hooks/ThemeContext";
+import Colors from "../../styles/Colors";
+import { View } from "react-native";
 
 type CustomButtonProps = {
   title: string; // Texto que será exibido no botão
@@ -73,7 +72,6 @@ const styles = StyleSheet.create({
   },
   image: {
     marginLeft: 12,
-    
   },
   title: {
     marginRight: 12,

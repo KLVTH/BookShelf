@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import Colors from "@/src/styles/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import Colors from "@/src/constants/Colors";
-import { useTheme } from "../ThemeContext";
-import { RenameSectionModal } from "./RenameSectionModal"; 
+import React, { useState } from "react";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTheme } from "../../hooks/ThemeContext";
+import { RenameSectionModal } from "./RenameSectionModal";
 
 interface EditSectionModalProps {
   visible: boolean;
@@ -25,12 +25,12 @@ export const EditSectionModal = ({
   const currentColors = Colors[theme];
 
   const openRenameModal = () => {
-    setRenameModalVisible(true); 
+    setRenameModalVisible(true);
   };
 
   const handleRenameSave = (newTitle: string) => {
-    onSave(newTitle); 
-    setRenameModalVisible(false); 
+    onSave(newTitle);
+    setRenameModalVisible(false);
   };
 
   return (
@@ -41,7 +41,7 @@ export const EditSectionModal = ({
         <View
           style={[
             styles.modalContent,
-            { backgroundColor: currentColors.background2 },
+            { backgroundColor: currentColors.background },
           ]}
         >
           <View
@@ -55,7 +55,7 @@ export const EditSectionModal = ({
               Editar Seção
             </Text>
 
-            <View >
+            <View>
               <TouchableOpacity onPress={onClose}>
                 <Ionicons name="close" size={26} color={"red"} />
               </TouchableOpacity>

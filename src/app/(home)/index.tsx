@@ -1,8 +1,9 @@
-import { AddSectionButton } from "@/src/components/AddSectionButton";
-import { EditSectionButton } from "@/src/components/EditSectionButton";
+import { AddSectionButton } from "@/src/components/buttons/AddSectionButton";
+import { EditSectionButton } from "@/src/components/buttons/EditSectionButton";
+import { FileButton } from "@/src/components/buttons/FileButton";
 import { AddSectionModal } from "@/src/components/modals/AddSectionModal";
 import { EditSectionModal } from "@/src/components/modals/EditSectionModal";
-import Colors from "@/src/constants/Colors";
+import Colors from "@/src/styles/Colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
@@ -14,11 +15,11 @@ import {
   Text,
   View,
 } from "react-native";
-import { Book } from "../../components/Book";
-import { Category } from "../../components/Category";
-import { FileButton } from "../../components/FileButton";
-import { useTheme } from "../../components/ThemeContext";
+import { Book } from "../../components/buttons/Book";
+import { Category } from "../../components/buttons/Category";
+import { useTheme } from "../../hooks/ThemeContext";
 import { BOOKS, CATEGORIES } from "../../utils/data";
+import { useCategoryListVisibility } from "./../../hooks/CategoryListVisibility";
 
 const STORAGE_KEY_CATEGORIES = "@categories";
 const STORAGE_KEY_SECTIONS = "@sections";
@@ -26,7 +27,7 @@ const STORAGE_KEY_SECTIONS = "@sections";
 const Home = () => {
   const { theme } = useTheme();
   const currentColors = Colors[theme];
-
+  const { isListVisible } = useCategoryListVisibility();
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [categories, setCategories] = useState(CATEGORIES);
   const [sections, setSections] = useState(BOOKS);
@@ -246,36 +247,39 @@ const Home = () => {
     <View
       style={[styles.container, { backgroundColor: currentColors.background }]}
     >
-      <View style={styles.categoryListContainer}>
-        <FlatList
-          data={categories}
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <Category
-              title={item}
-              onPress={() => handleCategorySelect(item)}
-              isSelected={item === category}
-            />
-          )}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.categoryListContent}
-          horizontal
-          ListEmptyComponent={
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 18,
-                color: "gray",
-                opacity: 0.4,
-                justifyContent: "center",
-                flex: 1,
-              }}
-            >
-              Adicione uma seção
-            </Text>
-          }
-        />
-      </View>
+      {/* Renderizar FlatList condicionalmente com base em isListVisible */}
+      {isListVisible && (
+        <View style={styles.categoryListContainer}>
+          <FlatList
+            data={categories}
+            keyExtractor={(item) => item}
+            renderItem={({ item }) => (
+              <Category
+                title={item}
+                onPress={() => handleCategorySelect(item)}
+                isSelected={item === category}
+              />
+            )}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoryListContent}
+            horizontal
+            ListEmptyComponent={
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 18,
+                  color: "gray",
+                  opacity: 0.4,
+                  justifyContent: "center",
+                  flex: 1,
+                }}
+              >
+                Adicione uma seção
+              </Text>
+            }
+          />
+        </View>
+      )}
 
       <SectionList
         style={styles.sectionList}
@@ -302,7 +306,7 @@ const Home = () => {
               justifyContent: "space-between",
               alignItems: "center",
               marginTop: 18,
-              marginBottom: 16, 
+              marginBottom: 16,
             }}
           >
             <Text style={[styles.sectionHeader, { color: currentColors.text }]}>
@@ -380,6 +384,7 @@ const styles = StyleSheet.create({
   categoryListContainer: {
     borderBottomWidth: 0.5,
     borderBottomColor: "108, 117, 125, 0.5",
+    height: 50
   },
 
   categoryListContent: {
@@ -396,7 +401,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 24,
     fontWeight: "bold",
-    flex: 1
+    flex: 1,
   },
   modalContainer: {
     flex: 1,

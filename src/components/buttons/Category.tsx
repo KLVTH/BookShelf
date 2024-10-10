@@ -1,7 +1,7 @@
+import { Text } from "react-native";
+import Colors from "@/src/styles/Colors";
 import { Pressable, PressableProps, StyleSheet } from "react-native";
-import { Text } from "@/src/components/Themed";
-import Colors from "@/src/constants/Colors"; 
-import { useTheme } from "./../components/ThemeContext"; 
+import { useTheme } from "../../hooks/ThemeContext";
 
 type CategoryProps = PressableProps & {
   title: string;
@@ -13,8 +13,8 @@ export function Category({
   isSelected = false,
   ...rest
 }: CategoryProps) {
-  const { theme } = useTheme(); 
-  const currentColors = Colors[theme]; 
+  const { theme } = useTheme();
+  const currentColors = Colors[theme];
   return (
     <Pressable
       style={[
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   selectedContainer: {
-    borderBottomWidth: 3
+    borderBottomWidth: 3,
   },
   text: {
     fontSize: 18,

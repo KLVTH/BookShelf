@@ -1,17 +1,17 @@
 import React from "react";
 import {
-  TouchableOpacity,
-  Text,
   StyleSheet,
-  ViewStyle,
+  Text,
   TextStyle,
+  TouchableOpacity,
+  ViewStyle,
 } from "react-native";
-import { useTheme } from "./ThemeContext"; 
-import Colors from "../constants/Colors"; 
+import { useTheme } from "../../hooks/ThemeContext";
+import Colors from "../../styles/Colors";
 
 interface AddSectionButtonProps {
-  onPress: () => void; 
-  title: string; 
+  onPress: () => void;
+  title: string;
   buttonStyle?: ViewStyle; // Estilo opcional para o botão que pode ser definido localmente
   textStyle?: TextStyle; // Estilo opcional para o texto que pode ser definido localmente
 }
@@ -19,8 +19,8 @@ interface AddSectionButtonProps {
 export const AddSectionButton: React.FC<AddSectionButtonProps> = ({
   onPress,
   title,
-  buttonStyle, 
-  textStyle, 
+  buttonStyle,
+  textStyle,
 }) => {
   const { theme } = useTheme(); // Obtenha o tema atual
   const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    width: 145
+    width: 145,
   },
   text: {
     fontSize: 16,

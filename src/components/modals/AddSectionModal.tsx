@@ -1,4 +1,4 @@
-import Colors from "@/src/constants/Colors";
+import Colors from "@/src/styles/Colors";
 import React, { useState } from "react";
 import {
   Alert,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useTheme } from "../ThemeContext";
+import { useTheme } from "../../hooks/ThemeContext";
 
 interface AddSectionModalProps {
   visible: boolean;
@@ -79,8 +79,8 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
   };
 
   const handleClose = () => {
-    setNewSectionName(""); 
-    onClose(); 
+    setNewSectionName("");
+    onClose();
   };
 
   return (
@@ -89,7 +89,7 @@ export const AddSectionModal: React.FC<AddSectionModalProps> = ({
         <View
           style={[
             styles.modalContent,
-            { backgroundColor: currentColors.background2 },
+            { backgroundColor: currentColors.background },
           ]}
         >
           <View>
