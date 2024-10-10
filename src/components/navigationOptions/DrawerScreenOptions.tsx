@@ -2,8 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { ParamListBase } from "@react-navigation/native";
 import React from "react";
-import { useTheme } from "../components/ThemeContext"; // Importa o ThemeContext
-import Colors from "../constants/Colors";
+import { useTheme } from "../../hooks/ThemeContext";
+import Colors from "../../styles/Colors";
 
 type DrawerScreenOptionsProps = {
   navigation: DrawerNavigationProp<ParamListBase>;

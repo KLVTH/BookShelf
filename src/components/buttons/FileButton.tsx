@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { DocumentPickerResult } from "expo-document-picker";
-import SelectSectionModal from "./modals/SelectSectionModal"; 
+import SelectSectionModal from "@/src/components/modals/SelectSectionModal"; 
 
 export const FileButton = ({
   onAddItem,

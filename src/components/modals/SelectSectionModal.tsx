@@ -1,16 +1,16 @@
-import Colors from "@/src/constants/Colors";
-import React, { useState, useEffect } from "react";
+import Colors from "@/src/styles/Colors";
+import { Ionicons } from "@expo/vector-icons"; // Importando Ionicons
+import React, { useEffect, useState } from "react";
 import {
   Modal,
-  View,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
+  View,
 } from "react-native";
-import { useTheme } from "../ThemeContext";
 import DropDownPicker from "react-native-dropdown-picker";
-import { Ionicons } from "@expo/vector-icons"; // Importando Ionicons
+import { useTheme } from "../../hooks/ThemeContext";
 
 interface SelectSectionModalProps {
   visible: boolean;
@@ -66,7 +66,7 @@ const SelectSectionModal: React.FC<SelectSectionModalProps> = ({
         <View
           style={[
             styles.modalContent,
-            { backgroundColor: currentColors.background2 },
+            { backgroundColor: currentColors.background },
           ]}
         >
           <Text
@@ -100,11 +100,11 @@ const SelectSectionModal: React.FC<SelectSectionModalProps> = ({
             showTickIcon={true}
             containerStyle={{ marginBottom: 20, marginTop: 10 }}
             style={{
-              backgroundColor: currentColors.background2,
+              backgroundColor: currentColors.background,
               borderColor: "gray",
             }}
             dropDownContainerStyle={{
-              backgroundColor: currentColors.background2,
+              backgroundColor: currentColors.background,
               borderColor: "gray",
             }}
             labelStyle={{ color: currentColors.text }}
@@ -154,9 +154,7 @@ const SelectSectionModal: React.FC<SelectSectionModalProps> = ({
               onPress={handleSectionSelect}
               style={styles.button}
             >
-              <Text style={styles.confirmText}>
-                Confirmar
-              </Text>
+              <Text style={styles.confirmText}>Confirmar</Text>
             </TouchableOpacity>
           </View>
         </View>

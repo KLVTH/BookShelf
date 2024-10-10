@@ -10,9 +10,10 @@ import { Drawer } from "expo-router/drawer";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
-import { ThemeProvider, useTheme } from "./../components/ThemeContext"; 
-import DrawerContent from "../components/DrawerContent";
-import DrawerScreenOptions from "../components/DrawerScreenOptions";
+import DrawerContent from "@/src/components/navigationOptions/DrawerContentOptions";
+import DrawerScreenOptions from "@/src/components/navigationOptions/DrawerScreenOptions";
+import { ThemeProvider, useTheme } from "../hooks/ThemeContext";
+import { CategoryListProvider } from "../hooks/CategoryListVisibility";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,7 +52,9 @@ export default function RootLayout() {
   // Envolve o layout no ThemeProvider para que o tema seja acessível em todo o aplicativo
   return (
     <ThemeProvider>
-      <RootLayoutNav />
+      <CategoryListProvider>
+        <RootLayoutNav />
+      </CategoryListProvider>
     </ThemeProvider>
   );
 }
@@ -64,7 +67,11 @@ function RootLayoutNav() {
     <NavigationThemeProvider
       value={isDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme}
     >
-      <Drawer drawerContent={DrawerContent} screenOptions={DrawerScreenOptions} initialRouteName="home" >
+      <Drawer
+        drawerContent={DrawerContent}
+        screenOptions={DrawerScreenOptions}
+        initialRouteName="home"
+      >
         <Drawer.Screen
           name="(home)"
           options={{
@@ -74,7 +81,6 @@ function RootLayoutNav() {
             drawerIcon: ({ size, color }) => (
               <Ionicons name="library" size={size} color={color} />
             ),
-            
           }}
         />
         <Drawer.Screen
@@ -87,7 +93,6 @@ function RootLayoutNav() {
             ),
           }}
         />
-        
       </Drawer>
     </NavigationThemeProvider>
   );

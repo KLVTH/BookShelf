@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Pressable, StyleSheet } from "react-native";
-import { useTheme } from "./../components/ThemeContext"; 
+import { useTheme } from "@/src/hooks/ThemeContext"; 
 
 export const SearchButton = forwardRef<
   typeof Pressable,
