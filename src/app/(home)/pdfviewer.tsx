@@ -1,29 +1,37 @@
-import { router, useLocalSearchParams } from "expo-router";
-import {
-  StyleSheet,
-  Dimensions,
-  View,
-  TouchableWithoutFeedback,
-} from "react-native";
-import Pdf from "react-native-pdf";
-import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/src/hooks/ThemeContext";
 import Colors from "@/src/styles/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import Pdf from "react-native-pdf";
 
 const PdfViewerPage = () => {
   const { name, uri } = useLocalSearchParams<{ name: string; uri: string }>();
   const navigation = useNavigation();
   const { theme } = useTheme();
   const currentColors = Colors[theme];
-  const [headerVisible, setHeaderVisible] = useState(true); 
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [dimensions, setDimensions] = useState(Dimensions.get("window"));
 
-  // Define o título e o botão de informação no header
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener("change", ({ window }) => {
+      setDimensions(window);
+    });
+
+    return () => subscription?.remove();
+  }, []);
+
   useEffect(() => {
     navigation.setOptions({
       title: name,
-      headerShown: headerVisible, 
+      headerShown: headerVisible,
       headerRight: () => (
         <Ionicons
           name="information-circle-outline"
@@ -41,31 +49,38 @@ const PdfViewerPage = () => {
     });
   }, [headerVisible, name, uri, navigation, currentColors.icon]);
 
-  // Função para alternar a visibilidade do header ao tocar no centro da tela
   const toggleHeaderVisibility = () => {
     setHeaderVisible((prev) => !prev);
   };
 
-  const { width, height } = Dimensions.get("window");
-  const touchAreaSize = width * 0.45; 
+  const touchAreaSize = dimensions.width * 0.45;
 
   return (
     <View style={styles.container}>
-      <Pdf
-        source={{
-          uri,
-        }}
-        style={styles.pdf}
-      />
+      <View style={styles.pdfContainer}>
+        <Pdf
+          source={{ uri }}
+          style={[
+            styles.pdf,
+            {
+              width: dimensions.width,
+              height: dimensions.height,
+              backgroundColor: currentColors.background,
+            },
+          ]}
+          enablePaging={true} // Permite a rolagem de páginas
+          horizontal={true}
+        />
+      </View>
       <TouchableWithoutFeedback onPress={toggleHeaderVisibility}>
         <View
           style={[
             styles.touchArea,
             {
-              width: touchAreaSize, 
-              height: touchAreaSize, 
-              marginLeft: -(touchAreaSize / 2), 
-              marginTop: -(touchAreaSize / 2), 
+              width: touchAreaSize,
+              height: touchAreaSize,
+              marginLeft: -(touchAreaSize / 2),
+              marginTop: -(touchAreaSize / 2),
             },
           ]}
         />
@@ -78,16 +93,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  pdfContainer: {
+    flex: 1,
+  },
   pdf: {
     flex: 1,
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
   },
   touchArea: {
     position: "absolute",
     top: "50%",
     left: "50%",
-    zIndex: 1, // garante que a área sensível ao toque esteja acima do PDF
+    zIndex: 1,
   },
 });
 
