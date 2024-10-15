@@ -1,10 +1,7 @@
 import StackScreenOptions from "@/src/components/navigationOptions/StackScreenOptions";
-import { router, Stack } from "expo-router";
-import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Stack } from "expo-router";
 import { useTheme } from "@/src/hooks/ThemeContext";
 import Colors from "@/src/styles/Colors";
-import { useLocalSearchParams } from "expo-router";
 
 export default function HomeLayout() {
   const { theme } = useTheme();
@@ -20,15 +17,6 @@ export default function HomeLayout() {
             fontFamily: "PlusJakartaSans",
             fontSize: 30,
           },
-          headerRight: () => (
-            <TouchableOpacity style={{ marginRight: 15 }}>
-              <Ionicons
-                name="information-circle-outline"
-                size={30}
-                color={currentColors.icon}
-              />
-            </TouchableOpacity>
-          ),
         }}
       />
       <Stack.Screen

@@ -34,7 +34,6 @@ const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [sectionToEdit, setSectionToEdit] = useState<string | null>(null);
-  const [newSectionName, setNewSectionName] = useState("");
   const sectionListRef = useRef<SectionList>(null);
 
   const handleEditSection = (newTitle: string) => {
