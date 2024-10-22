@@ -112,7 +112,7 @@ const Home = () => {
 
   const addItemToSection = (
     sectionTitle: string,
-    newItem: { id: string; name: string; uri: string },
+    newItem: { id: string; name: string; uri: string, pageCount: number },
   ) => {
     const updatedSections = sections.map((section) => {
       if (section.title === sectionTitle) {
@@ -128,10 +128,10 @@ const Home = () => {
     saveData([], updatedSections);
   };
   //função que abre o pdf
-  const openPDF = (item: { name: string; uri: string }) => {
+  const openPDF = (item: { name: string; uri: string; pageCount: number }) => {
     router.push({
       pathname: "/pdfviewer",
-      params: { name: item.name, uri: item.uri },
+      params: { name: item.name, uri: item.uri, pageCount: item.pageCount },
     });
   };
 
@@ -290,6 +290,7 @@ const Home = () => {
           <View>
             <Book
               title={item.name}
+              pageCount={item.pageCount}
               //imageSource={require("../../assets/images/file.png")}
               onPress={() => openPDF(item)}
               onLongPress={() => removeItemFromSection(section.title, item.id)}
@@ -362,11 +363,13 @@ const Home = () => {
 
       <FileButton
         sections={sections} // Passa as seções disponíveis
-        onAddItem={(sectionTitle, itemName, pdfUri) => {
+        onAddItem={(sectionTitle, itemName, pdfUri, pageCount) => {
+          // Adicione pageCount aqui
           const newItem = {
             id: String(new Date().getTime()), // Gera um ID único
             name: itemName, // Nome escolhido pelo usuário
             uri: pdfUri, // URI do PDF selecionado
+            pageCount: pageCount, // Inclua o número de páginas
           };
           addItemToSection(sectionTitle, newItem); // Adiciona o item na seção selecionada
         }}
