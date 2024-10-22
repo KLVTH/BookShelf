@@ -12,11 +12,13 @@ import { View } from "react-native";
 
 type CustomButtonProps = {
   title: string; // Texto que será exibido no botão
+  pageCount: number;
   //imageSource: any; // Fonte da imagem
 } & TouchableOpacityProps; // Permite passar propriedades adicionais do TouchableOpacity
 
 export function Book({
   title,
+  pageCount,
   //imageSource,
   ...touchableProps
 }: CustomButtonProps) {
@@ -55,7 +57,7 @@ export function Book({
         >
           {title}
         </Text>
-        {/*<Text>autor, quantidade de pags?</Text>*/}
+        <Text>Páginas: {pageCount} </Text>
       </View>
     </TouchableOpacity>
   );

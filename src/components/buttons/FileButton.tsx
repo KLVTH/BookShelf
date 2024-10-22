@@ -2,17 +2,24 @@ import React, { useState } from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { DocumentPickerResult } from "expo-document-picker";
-import SelectSectionModal from "@/src/components/modals/SelectSectionModal"; 
+import { PDFDocument } from "pdf-lib"; // Importa PDFDocument
+import SelectSectionModal from "@/src/components/modals/SelectSectionModal";
 
 export const FileButton = ({
   onAddItem,
   sections,
 }: {
-  onAddItem: (sectionTitle: string, itemName: string, uri: string) => void;
+  onAddItem: (
+    sectionTitle: string,
+    itemName: string,
+    uri: string,
+    pageCount: number,
+  ) => void; // Adiciona pageCount
   sections: { title: string }[];
 }) => {
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [pageCount, setPageCount] = useState<number | null>(null); // Estado para o número de páginas
 
   async function pickDocument() {
     let result: DocumentPickerResult = await DocumentPicker.getDocumentAsync({
@@ -23,15 +30,24 @@ export const FileButton = ({
     if (result.assets && result.assets[0].uri) {
       const pdfUri = result.assets[0].uri;
       setSelectedPdf(pdfUri);
-      setModalVisible(true); 
+
+      // Obtém o número de páginas do PDF
+      const pdfBytes = await fetch(pdfUri).then((res) => res.arrayBuffer());
+      const pdfDoc = await PDFDocument.load(pdfBytes);
+      const numberOfPages = pdfDoc.getPageCount(); // Armazena o número de páginas
+      setPageCount(numberOfPages); // Atualiza o estado do número de páginas
+
+      console.log(`Número de páginas: ${numberOfPages}`); // Log do número de páginas
+      setModalVisible(true);
     }
   }
 
   const handleSectionSelect = (sectionTitle: string, itemName: string) => {
-    if (selectedPdf) {
-      onAddItem(sectionTitle, itemName, selectedPdf);
-      setModalVisible(false); 
-      setSelectedPdf(null); 
+    if (selectedPdf && pageCount !== null) {
+      onAddItem(sectionTitle, itemName, selectedPdf, pageCount); // Passa o pageCount
+      setModalVisible(false);
+      setSelectedPdf(null);
+      setPageCount(null); // Reseta o número de páginas
     }
   };
 
