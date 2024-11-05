@@ -45,7 +45,6 @@ export const FileButton = ({
   const handleSectionSelect = (sectionTitle: string, itemName: string) => {
     if (selectedPdf && pageCount !== null) {
       const addedDate = new Date().toLocaleDateString(); 
-      console.log(`PDF adicionado em: ${addedDate}`); 
       onAddItem(sectionTitle, itemName, selectedPdf, pageCount, addedDate);
       setModalVisible(false);
       setSelectedPdf(null);

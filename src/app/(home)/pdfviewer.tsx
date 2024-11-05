@@ -9,7 +9,8 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-  Text
+  ActivityIndicator,
+  Text,
 } from "react-native";
 import Pdf from "react-native-pdf";
 
@@ -20,6 +21,8 @@ const PdfViewerPage = () => {
   const currentColors = Colors[theme];
   const [headerVisible, setHeaderVisible] = useState(true);
   const [dimensions, setDimensions] = useState(Dimensions.get("window"));
+  const [loading, setLoading] = useState(true);
+  const [loadProgress, setLoadProgress] = useState(0);
 
   useEffect(() => {
     const subscription = Dimensions.addEventListener("change", ({ window }) => {
@@ -50,6 +53,22 @@ const PdfViewerPage = () => {
     });
   }, [headerVisible, name, uri, navigation, currentColors.icon]);
 
+  const handleLoadComplete = () => {
+    setLoading(false);
+  };
+
+  const handleError = (error: object) => {
+    console.error("Erro ao carregar o PDF: ", error);
+    setLoading(false); 
+  };
+
+  const handleLoadProgress = (percent: number) => {
+    setLoadProgress(percent); 
+    if (percent >= 1) {
+      setLoading(false); 
+    }
+  };
+
   const toggleHeaderVisibility = () => {
     setHeaderVisible((prev) => !prev);
   };
@@ -59,18 +78,20 @@ const PdfViewerPage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.pdfContainer}>
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={currentColors.icon} />
+            
+          </View>
+        )}
         <Pdf
           source={{ uri }}
-          style={[
-            styles.pdf,
-            {
-              width: dimensions.width,
-              height: dimensions.height,
-              backgroundColor: currentColors.background,
-            },
-          ]}
-          enablePaging={true} // Permite a rolagem de páginas
+          style={[styles.pdf, { width: dimensions.width, height: dimensions.height, backgroundColor: currentColors.background }]}
+          enablePaging={true}
           horizontal={true}
+          onLoadComplete={handleLoadComplete}
+          onError={handleError} 
+          onLoadProgress={handleLoadProgress} 
         />
       </View>
       <TouchableWithoutFeedback onPress={toggleHeaderVisibility}>
@@ -96,9 +117,20 @@ const styles = StyleSheet.create({
   },
   pdfContainer: {
     flex: 1,
+    position: 'relative',
   },
   pdf: {
     flex: 1,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
   },
   touchArea: {
     position: "absolute",
