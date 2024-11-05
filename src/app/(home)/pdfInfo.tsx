@@ -54,7 +54,7 @@ const PdfInfo = () => {
          onPress={() => {
              router.back();
         }}>
-    <Text style={{ color: currentColors.background, fontSize: 16, textAlign: 'center' }}>
+    <Text style={{ color: currentColors.text, fontSize: 16, textAlign: 'center' }}>
     Ler PDF
     </Text>
   </TouchableOpacity>
