@@ -2,10 +2,24 @@ import StackScreenOptions from "@/src/components/navigationOptions/StackScreenOp
 import { Stack } from "expo-router";
 import { useTheme } from "@/src/hooks/ThemeContext";
 import Colors from "@/src/styles/Colors";
+import { Text, View } from "react-native";
+
+interface CustomHeaderTitleProps {
+  title: string;
+  color: string; 
+}
+
+const CustomHeaderTitle: React.FC<CustomHeaderTitleProps> = ({ title, color }) => (
+  <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', height: 50 }}>
+    <Text style={{ fontFamily: "PlusJakartaSans", fontSize: 30, marginLeft: -20, marginTop: -8, color }}>
+      {title}
+    </Text>
+  </View>
+);
 
 export default function HomeLayout() {
   const { theme } = useTheme();
-  const currentColors = Colors[theme];
+  const currentColors = Colors[theme]; 
 
   return (
     <Stack>
@@ -22,21 +36,17 @@ export default function HomeLayout() {
       <Stack.Screen
         name="searchScreen"
         options={{
-          title: "Buscar",
-          headerTitleStyle: {
-            fontFamily: "PlusJakartaSans",
-            fontSize: 30,
-          },
+          headerTitle: () => (
+            <CustomHeaderTitle title="Buscar" color={currentColors.text} /> // Usa a cor do tema
+          ),
         }}
       />
       <Stack.Screen
         name="pdfInfo"
         options={{
-          title: "Informações",
-          headerTitleStyle: {
-            fontFamily: "PlusJakartaSans",
-            fontSize: 30,
-          },
+          headerTitle: () => (
+            <CustomHeaderTitle title="Informações" color={currentColors.text} /> // Usa a cor do tema
+          ),
         }}
       />
     </Stack>

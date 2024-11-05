@@ -14,6 +14,14 @@ import {
 } from "react-native";
 import Pdf from "react-native-pdf";
 
+const CustomHeaderTitle: React.FC<{ title: string; color: string }> = ({ title, color }) => (
+  <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', height: 50 }}>
+    <Text style={{ fontFamily: "PlusJakartaSans", fontSize: 30, color, marginLeft: -20, marginTop: -8 }}>
+      {title}
+    </Text>
+  </View>
+);
+
 const PdfViewerPage = () => {
   const { name, uri, pageCount, addedDate } = useLocalSearchParams() as unknown as { name: string; uri: string; pageCount: number, addedDate: string };
   const navigation = useNavigation();
@@ -34,7 +42,7 @@ const PdfViewerPage = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: name,
+      headerTitle: () => <CustomHeaderTitle title={name} color={currentColors.text} />, // Usando a cor do tema
       headerShown: headerVisible,
       headerRight: () => (
         <Ionicons
@@ -51,7 +59,7 @@ const PdfViewerPage = () => {
         />
       ),
     });
-  }, [headerVisible, name, uri, navigation, currentColors.icon]);
+  }, [headerVisible, name, uri, navigation, currentColors]);
 
   const handleLoadComplete = () => {
     setLoading(false);
@@ -81,7 +89,6 @@ const PdfViewerPage = () => {
         {loading && (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={currentColors.icon} />
-            
           </View>
         )}
         <Pdf
@@ -96,15 +103,12 @@ const PdfViewerPage = () => {
       </View>
       <TouchableWithoutFeedback onPress={toggleHeaderVisibility}>
         <View
-          style={[
-            styles.touchArea,
-            {
-              width: touchAreaSize,
-              height: touchAreaSize,
-              marginLeft: -(touchAreaSize / 2),
-              marginTop: -(touchAreaSize / 2),
-            },
-          ]}
+          style={[styles.touchArea, {
+            width: touchAreaSize,
+            height: touchAreaSize,
+            marginLeft: -(touchAreaSize / 2),
+            marginTop: -(touchAreaSize / 2),
+          }]}
         />
       </TouchableWithoutFeedback>
     </View>
