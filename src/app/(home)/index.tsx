@@ -309,7 +309,10 @@ const Home = () => {
               marginBottom: 16,
             }}
           >
-            <Text style={[styles.sectionHeader, { color: currentColors.text }]}>
+            <Text style={[styles.sectionHeader, { color: currentColors.text }]}
+            numberOfLines={1} // Limita a uma linha
+            ellipsizeMode="tail" // Adiciona "..." se o texto for muito longo
+            >
               {title}
             </Text>
             <EditSectionButton
