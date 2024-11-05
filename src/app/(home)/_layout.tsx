@@ -29,6 +29,16 @@ export default function HomeLayout() {
           },
         }}
       />
+      <Stack.Screen
+        name="pdfInfo"
+        options={{
+          title: "Informações",
+          headerTitleStyle: {
+            fontFamily: "PlusJakartaSans",
+            fontSize: 30,
+          },
+        }}
+      />
     </Stack>
   );
 }

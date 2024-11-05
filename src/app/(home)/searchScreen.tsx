@@ -77,6 +77,8 @@ const SearchScreen = () => {
             <View>
               <Book
                 title={item.name}
+                pageCount={item.pageCount}
+
                 //imageSource={require("../../assets/images/icon.png")}
                 onPress={() => openPDF(item)}
               />
