@@ -11,7 +11,7 @@ import Colors from "../../styles/Colors";
 import { View } from "react-native";
 
 type CustomButtonProps = {
-  title: string; // Texto que será exibido no botão
+  title: string; 
   pageCount: number;
   //imageSource: any; // Fonte da imagem
 } & TouchableOpacityProps; // Permite passar propriedades adicionais do TouchableOpacity
@@ -22,15 +22,15 @@ export function Book({
   //imageSource,
   ...touchableProps
 }: CustomButtonProps) {
-  const { theme } = useTheme(); // Obtenha o tema atual
-  const currentColors = Colors[theme]; // Obtenha as cores correspondentes ao tema atual
+  const { theme } = useTheme(); 
+  const currentColors = Colors[theme]; 
 
   return (
     <TouchableOpacity
       style={[
         styles.container,
         { backgroundColor: currentColors.bookComponent },
-      ]} // Define a cor do fundo
+      ]} 
       {...touchableProps}
     >
       {/*<Image source={imageSource} style={styles.image}/>*/}
@@ -57,7 +57,7 @@ export function Book({
         >
           {title}
         </Text>
-        <Text>Páginas: {pageCount} </Text>
+        <Text style={{color: currentColors.placeholder}}>Páginas: {pageCount} </Text>
       </View>
     </TouchableOpacity>
   );

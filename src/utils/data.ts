@@ -1,8 +1,9 @@
-// Definição dos tipos
 interface BookItem {
+  pageCount: number;
   id: string;
   name: string;
   uri: string;
+  addedDate: string; 
 }
 
 interface Section {
@@ -10,12 +11,10 @@ interface Section {
   data: BookItem[];
 }
 
-// Dados da seção
 const BOOKS: Section[] = [
  
 ];
 
-// Categorias baseadas nos livros
 const CATEGORIES = BOOKS.map((item) => item.title);
 
 export { BOOKS, CATEGORIES, Section, BookItem };

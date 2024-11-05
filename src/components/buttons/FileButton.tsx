@@ -14,12 +14,13 @@ export const FileButton = ({
     itemName: string,
     uri: string,
     pageCount: number,
-  ) => void; // Adiciona pageCount
+    addedDate: string 
+  ) => void; 
   sections: { title: string }[];
 }) => {
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [pageCount, setPageCount] = useState<number | null>(null); // Estado para o número de páginas
+  const [pageCount, setPageCount] = useState<number | null>(null); 
 
   async function pickDocument() {
     let result: DocumentPickerResult = await DocumentPicker.getDocumentAsync({
@@ -34,20 +35,21 @@ export const FileButton = ({
       // Obtém o número de páginas do PDF
       const pdfBytes = await fetch(pdfUri).then((res) => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
-      const numberOfPages = pdfDoc.getPageCount(); // Armazena o número de páginas
-      setPageCount(numberOfPages); // Atualiza o estado do número de páginas
+      const numberOfPages = pdfDoc.getPageCount(); 
+      setPageCount(numberOfPages); 
 
-      console.log(`Número de páginas: ${numberOfPages}`); // Log do número de páginas
       setModalVisible(true);
     }
   }
 
   const handleSectionSelect = (sectionTitle: string, itemName: string) => {
     if (selectedPdf && pageCount !== null) {
-      onAddItem(sectionTitle, itemName, selectedPdf, pageCount); // Passa o pageCount
+      const addedDate = new Date().toLocaleDateString(); 
+      console.log(`PDF adicionado em: ${addedDate}`); 
+      onAddItem(sectionTitle, itemName, selectedPdf, pageCount, addedDate);
       setModalVisible(false);
       setSelectedPdf(null);
-      setPageCount(null); // Reseta o número de páginas
+      setPageCount(null); 
     }
   };
 
@@ -57,7 +59,6 @@ export const FileButton = ({
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
 
-      {/* Modal de seleção de seção e nome do item */}
       <SelectSectionModal
         visible={modalVisible}
         sections={sections}

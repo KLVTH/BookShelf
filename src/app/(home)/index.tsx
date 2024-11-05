@@ -112,7 +112,7 @@ const Home = () => {
 
   const addItemToSection = (
     sectionTitle: string,
-    newItem: { id: string; name: string; uri: string, pageCount: number },
+    newItem: { id: string; name: string; uri: string, pageCount: number, addedDate: string },
   ) => {
     const updatedSections = sections.map((section) => {
       if (section.title === sectionTitle) {
@@ -128,10 +128,10 @@ const Home = () => {
     saveData([], updatedSections);
   };
   //função que abre o pdf
-  const openPDF = (item: { name: string; uri: string; pageCount: number }) => {
+  const openPDF = (item: { name: string; uri: string; pageCount: number, addedDate: string }) => {
     router.push({
       pathname: "/pdfviewer",
-      params: { name: item.name, uri: item.uri, pageCount: item.pageCount },
+      params: { name: item.name, uri: item.uri, pageCount: item.pageCount, addedDate: item.addedDate },
     });
   };
 
@@ -363,13 +363,14 @@ const Home = () => {
 
       <FileButton
         sections={sections} // Passa as seções disponíveis
-        onAddItem={(sectionTitle, itemName, pdfUri, pageCount) => {
+        onAddItem={(sectionTitle, itemName, pdfUri, pageCount, addedDate) => {
           // Adicione pageCount aqui
           const newItem = {
             id: String(new Date().getTime()), // Gera um ID único
             name: itemName, // Nome escolhido pelo usuário
             uri: pdfUri, // URI do PDF selecionado
             pageCount: pageCount, // Inclua o número de páginas
+            addedDate: addedDate,
           };
           addItemToSection(sectionTitle, newItem); // Adiciona o item na seção selecionada
         }}

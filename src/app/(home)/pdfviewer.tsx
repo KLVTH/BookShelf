@@ -9,11 +9,12 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
+  Text
 } from "react-native";
 import Pdf from "react-native-pdf";
 
 const PdfViewerPage = () => {
-  const { name, uri } = useLocalSearchParams<{ name: string; uri: string }>();
+  const { name, uri, pageCount, addedDate } = useLocalSearchParams() as unknown as { name: string; uri: string; pageCount: number, addedDate: string };
   const navigation = useNavigation();
   const { theme } = useTheme();
   const currentColors = Colors[theme];
@@ -41,7 +42,7 @@ const PdfViewerPage = () => {
           onPress={() => {
             router.push({
               pathname: "/pdfInfo",
-              params: { name, uri },
+              params: { name, uri, pageCount, addedDate },
             });
           }}
         />
