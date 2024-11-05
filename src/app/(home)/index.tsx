@@ -271,6 +271,7 @@ const Home = () => {
                   opacity: 0.4,
                   justifyContent: "center",
                   flex: 1,
+                  padding: 10
                 }}
               >
                 Adicione uma seção
